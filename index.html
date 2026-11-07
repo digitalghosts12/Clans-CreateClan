@@ -257,4 +257,4 @@ async function createPoll(){let q=document.getElementById('pollQ').value.trim();
 async function votePoll(msgIdx,optIdx){let c=clans.find(x=>x.id===currentClanId);let m=c.messages[msgIdx];if(!m||!m.poll)return;if(m.poll.votes[myName]!==undefined){alert('Zaten oy verdin! ✅');return;}m.poll.votes[myName]=optIdx;await saveCloud();renderMessages();if(navigator.vibrate)navigator.vibrate(30);}
 </script>
 </body>
-                        </html>
+</html>
