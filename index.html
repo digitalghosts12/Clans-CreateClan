@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -103,8 +103,16 @@ input:focus{border-color:#00e676}
 <button class="mainBtn yellow" onclick="showAra()">🔍 <span data-t="findClan">FIND CLAN</span></button>
 <div class="tipText">💡 <span data-t="tip">Tip: Hold Admin or Language button 1 sec to move it</span><br><span style="color:#00e676">🌐 Herkes aynı klana girebilir!</span></div>
 </div>
-<div id="createBox" class="card hidden"><h3>➕ <span data-t="createClanTitle">Create Clan</span></h3><input id="createName" placeholder="Name"><input id="createPass" placeholder="Password" type="password"><button class="smallBtn green" onclick="createClan()"><span data-t="createBtn">CREATE ✅</span></button><div class="backLink" onclick="backToMenu()">◀ <span data-t="back">Back</span></div></div>
-<div id="araBox" class="card hidden"><h3>🔍 <span data-t="findClanTitle">Find Clan</span></h3><input id="araName" placeholder="Name"><input id="araPass" placeholder="Password" type="password"><button class="smallBtn yellow" onclick="araGir()"><span data-t="searchBtn">SEARCH 🔍</span></button><div class="backLink" onclick="backToMenu()">◀ <span data-t="back">Back</span></div></div>
+<div id="createBox" class="card hidden"><h3>➕ <span data-t="createClanTitle">Create Clan</span></h3>
+<input id="myNameInput" placeholder="Senin Adın: Örn Amin">
+<input id="createName" placeholder="Klan Adı: Örn Hayaletler">
+<input id="createPass" placeholder="Şifre: Örn 1234" type="password">
+<button class="smallBtn green" onclick="createClan()"><span data-t="createBtn">CREATE ✅</span></button><div class="backLink" onclick="backToMenu()">◀ <span data-t="back">Back</span></div></div>
+<div id="araBox" class="card hidden"><h3>🔍 <span data-t="findClanTitle">Find Clan</span></h3>
+<input id="araMyName" placeholder="Senin Adın: Örn Anne">
+<input id="araName" placeholder="Klan Adı: Örn Hayaletler">
+<input id="araPass" placeholder="Klan Şifresi: Örn 1234" type="password">
+<button class="smallBtn yellow" onclick="araGir()"><span data-t="searchBtn">SEARCH 🔍</span></button><div class="backLink" onclick="backToMenu()">◀ <span data-t="back">Back</span></div></div>
 </div></div>
 <div id="chatScreen">
 <div id="chatHeader"><button onclick="backHome()">◀</button><div style="flex:1"><b id="chatTitle">Clan</b><br><span id="chatInfo" style="font-size:12px;opacity:.7"></span></div><button onclick="leaveClan()" style="background:#ff3b30;color:#fff;border-color:#7a120c"><span data-t="leave">Leave</span></button></div>
@@ -136,7 +144,6 @@ input:focus{border-color:#00e676}
 </div>
 </div>
 <script>
-// ===== ORTAK KASA + 100K + SIFIRLAMA =====
 let BIN_ID = localStorage.getItem('clans_bin_v2');
 let API = 'https://api.npoint.io/v1/documents';
 async function getCloud(){
@@ -150,12 +157,9 @@ async function getCloud(){
 }
 async function saveCloud(){ localStorage.setItem('mortoist_clans', JSON.stringify(clans)); if(!BIN_ID) return; try{ await fetch(API + '/' + BIN_ID, {method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify({clans: clans})}); }catch(e){} }
 async function refreshClans(){ let d = await getCloud(); clans = d.clans || []; }
-
-// ===== YENİ: ADMİN GİZLEME SİSTEMİ =====
-let hiddenForAdmin = JSON.parse(localStorage.getItem('hidden_clans_admin')||'[]'); // Sadece senin telefonunda gizli, klan silinmez!
+let hiddenForAdmin = JSON.parse(localStorage.getItem('hidden_clans_admin')||'[]');
 let adminSelected = new Set();
 let adminSelectionMode = false;
-
 let clans=[];
 let myName='Kaan',currentClanId=null,isAdmin=false,ADMIN_PASS="tYgH12",selectedIndex=-1;
 let lang=localStorage.getItem('mortoist_lang')||'en';
@@ -166,7 +170,7 @@ tr:{viewClans:"Klanları Gör",createClan:"KLAN OLUŞTUR",findClan:"KLAN ARA",cr
 az:{viewClans:"Klanlara Bax",createClan:"KLAN YARAT",findClan:"KLAN TAP",createClanTitle:"Klan Yarat",createBtn:"YARAT ✅",back:"Geri",findClanTitle:"Klan Tap",searchBtn:"AXTAR 🔍",leave:"Çıx",delete:"Sil",admin:"Admin",allClans:"Bütün Klanlar",tapToEnter:"Birinə bas, gizli gir 👻",close:"Bağla",totalClans:"Ümumi Klan",chooseLang:"Dil Seç",chooseLangSub:"Dilini seç, hər şey dəyişəcək",enterPass:"Şifrəni Gir:",wrongPass:"Şifrə yanlışdır!",correctPass:"Şifrə doğrudur! 👑",writeNamePass:"Ad və Şifrə yaz!",noClan:"Belə klan yoxdur! Silinmiş ola bilər!",selectMsg:"1 mesaj seçildi • Yaşıl oldu ✅",deleteMsgQ:"Bu mesajı silmək istəyirsən?",leaveQ:"Çıxmaq istəyirsən? Son adamsansa klan SİLİNƏCƏK!",members:"üzv",secret:"Sən görünməzsən",clickToEnter:"👉 Girmək üçün bas - Gizli girəcəksən",passwordLabel:"Şifrə",name:"Ad",pass:"Şifrə",writeMsg:"Mesaj yaz...",clanCreated:"Klan yaradıldı!",tip:"İpucu: Admin və ya Dil düyməsini 1 saniyə bas, daşı",welcome:"Salam komanda!"}
 };
 ['es','fr','de','it','pt','ru','ja','ko','zh','ar','hi','nl','sv','uk','pl'].forEach(c=>{ if(!T[c]) T[c]=T.en; });
-function applyLang(){document.querySelectorAll('[data-t]').forEach(el=>{let k=el.getAttribute('data-t');if(T[lang]&&T[lang][k])el.textContent=T[lang][k]});let cur=LANGS.find(l=>l.code===lang);document.getElementById('langBtn').textContent='🌐 '+cur.code.toUpperCase();document.getElementById('msgInput').placeholder=T[lang].writeMsg;document.getElementById('createName').placeholder=T[lang].name;document.getElementById('createPass').placeholder=T[lang].pass;document.getElementById('araName').placeholder=T[lang].name;document.getElementById('araPass').placeholder=T[lang].pass;document.documentElement.lang=lang;localStorage.setItem('mortoist_lang',lang);renderLangList();}
+function applyLang(){document.querySelectorAll('[data-t]').forEach(el=>{let k=el.getAttribute('data-t');if(T[lang]&&T[lang][k])el.textContent=T[lang][k]});let cur=LANGS.find(l=>l.code===lang);document.getElementById('langBtn').textContent='🌐 '+cur.code.toUpperCase();document.getElementById('msgInput').placeholder=T[lang].writeMsg;document.documentElement.lang=lang;localStorage.setItem('mortoist_lang',lang);renderLangList();}
 function openLang(){document.getElementById('langPanel').classList.add('show');renderLangList();}
 function closeLang(){document.getElementById('langPanel').classList.remove('show');}
 function renderLangList(){document.getElementById('langList').innerHTML=LANGS.map(l=>`<div class="langItem ${l.code===lang?'active':''}" onclick="setLang('${l.code}')"><span class="flag">${l.flag}</span> ${l.name} <span style="opacity:.5">(${l.code.toUpperCase()})</span> ${l.code===lang?'<span class="check">✓</span>':''}</div>`).join('');}
@@ -178,18 +182,32 @@ function hideAdminBtn(){document.getElementById('adminBtn').style.display='none'
 function backToMenu(){document.getElementById('createBox').classList.add('hidden');document.getElementById('araBox').classList.add('hidden');document.getElementById('menuBtns').classList.remove('hidden');showAdminBtn();}
 function showCreate(){document.getElementById('menuBtns').classList.add('hidden');document.getElementById('araBox').classList.add('hidden');document.getElementById('createBox').classList.remove('hidden');hideAdminBtn();}
 function showAra(){document.getElementById('menuBtns').classList.add('hidden');document.getElementById('createBox').classList.add('hidden');document.getElementById('araBox').classList.remove('hidden');hideAdminBtn();}
-async function createClan(){ await refreshClans(); let n=document.getElementById('createName').value.trim(),p=document.getElementById('createPass').value.trim(); if(!n||!p){alert(T[lang].writeNamePass);return;} if(clans.find(x=>x.name.toLowerCase()===n.toLowerCase())){ alert('Bu klan zaten var!'); return; } myName=n; let c={id:Date.now(),name:n,pass:p,members:[n],messages:[{user:'System',text:T[lang].clanCreated,time:'Now'}]}; clans.push(c); await saveCloud(); openChat(c.id); }
-async function araGir(){ await refreshClans(); let n=document.getElementById('araName').value.trim(),p=document.getElementById('araPass').value.trim(); if(!n||!p){alert(T[lang].writeNamePass);return;} let c=clans.find(x=>x.name.toLowerCase()===n.toLowerCase()&&x.pass===p); if(!c){alert(T[lang].noClan);return;} if(c.members.length>=100000){ alert('Klan doldu! 100.000 kişi var!'); return; } myName=n; if(!isAdmin&&!c.members.includes(n)) c.members.push(n); await saveCloud(); openChat(c.id,isAdmin); }
-function adminLogin(){if(isAdmin){openAdminPanel();return;}let p=prompt(T[lang].enterPass);if(p===null)return;if(p===ADMIN_PASS){isAdmin=true;document.getElementById('adminBtn').textContent='👑 '+T[lang].admin+' (On)';document.getElementById('adminBtn').classList.add('adminOn');document.getElementById('adminKlanlarBtn').style.display='block';alert(T[lang].correctPass);backToMenu();}else alert(T[lang].wrongPass);}
-
-// ===== ADMİN PANELİ: 1 SN BASILI TUT = SEÇ, TEK TIK = DİĞERLERİNİ SEÇ =====
-async function openAdminPanel(){
-  if(!isAdmin){adminLogin();return;}
+async function createClan(){
   await refreshClans();
-  cancelAdminSelection();
-  document.getElementById('adminPanel').style.display='flex';
-  renderAdminList();
+  let my = document.getElementById('myNameInput').value.trim();
+  let n = document.getElementById('createName').value.trim();
+  let p = document.getElementById('createPass').value.trim();
+  if(!my || !n || !p){ alert('Lütfen 3ünü de doldur! Senin Adın + Klan Adı + Şifre'); return; }
+  if(clans.find(x=>x.name.toLowerCase()===n.toLowerCase())){ alert('Bu KLAN ADI zaten var! Başka klan adı dene, örn: ' + n + '123'); return; }
+  myName = my;
+  let c={id:Date.now(),name:n,pass:p,members:[my],messages:[{user:'System',text:T[lang].clanCreated,time:'Now'}]};
+  clans.push(c); await saveCloud(); openChat(c.id);
 }
+async function araGir(){
+  await refreshClans();
+  let my = document.getElementById('araMyName').value.trim();
+  let n = document.getElementById('araName').value.trim();
+  let p = document.getElementById('araPass').value.trim();
+  if(!my || !n || !p){ alert('Lütfen 3ünü de doldur!'); return; }
+  let c=clans.find(x=>x.name.toLowerCase()===n.toLowerCase() && x.pass===p);
+  if(!c){ alert(T[lang].noClan + ' Klan adı ya da şifre yanlış!'); return; }
+  if(c.members.length>=100000){ alert('Klan doldu! 100.000 kişi var!'); return; }
+  myName = my;
+  if(!isAdmin && !c.members.includes(my)) c.members.push(my);
+  await saveCloud(); openChat(c.id,isAdmin);
+}
+function adminLogin(){if(isAdmin){openAdminPanel();return;}let p=prompt(T[lang].enterPass);if(p===null)return;if(p===ADMIN_PASS){isAdmin=true;document.getElementById('adminBtn').textContent='👑 '+T[lang].admin+' (On)';document.getElementById('adminBtn').classList.add('adminOn');document.getElementById('adminKlanlarBtn').style.display='block';alert(T[lang].correctPass);backToMenu();}else alert(T[lang].wrongPass);}
+async function openAdminPanel(){ if(!isAdmin){adminLogin();return;} await refreshClans(); cancelAdminSelection(); document.getElementById('adminPanel').style.display='flex'; renderAdminList(); }
 function renderAdminList(){
   let visible = clans.filter(c=>!hiddenForAdmin.includes(c.id));
   document.getElementById('totalClan').textContent = visible.length + ' / ' + clans.length;
@@ -197,9 +215,8 @@ function renderAdminList(){
   document.getElementById('adminList').innerHTML = visible.map(c=>{
     let sel = adminSelected.has(c.id) ? 'selected' : '';
     return `<div class="adminCard ${sel}" data-id="${c.id}" onclick="adminCardClick(${c.id})"><b>👑 ${c.name} ${adminSelected.has(c.id)?'✅':''}</b><p>🔑 ${T[lang].passwordLabel}: ${c.pass} • 👥 ${c.members.join(', ')} • 💬 ${c.messages.length} • ${c.members.length}/100000</p><p style="color:#00e676">${adminSelectionMode?'👆 Seçmek için tıkla':T[lang].clickToEnter}</p><p style="color:#888;font-size:12px">1 sn basılı tut = Seçim modu</p></div>`;
-  }).join('') || '<p style="text-align:center;opacity:.6;padding:20px">Hiç klan yok veya hepsini gizledin 🙈<br>Gizli Klanları Geri Göster\'e bas!</p>';
-  attachAdminLongPress();
-  updateAdminSelectBar();
+  }).join('') || '<p style="text-align:center;opacity:.6;padding:20px">Hiç klan yok veya hepsini gizledin 🙈</p>';
+  attachAdminLongPress(); updateAdminSelectBar();
 }
 function attachAdminLongPress(){
   document.querySelectorAll('.adminCard').forEach(el=>{
@@ -212,49 +229,13 @@ function attachAdminLongPress(){
     el.addEventListener('mouseleave', ()=>clearTimeout(timer));
   });
 }
-function enterAdminSelection(id){
-  adminSelectionMode = true;
-  toggleAdminSelect(id);
-}
-function adminCardClick(id){
-  if(adminSelectionMode){
-    toggleAdminSelect(id);
-    return;
-  }
-  adminViewClan(id);
-}
-function toggleAdminSelect(id){
-  if(adminSelected.has(id)) adminSelected.delete(id); else adminSelected.add(id);
-  if(adminSelected.size===0) adminSelectionMode=false;
-  renderAdminList();
-}
-function updateAdminSelectBar(){
-  let bar = document.getElementById('adminSelectBar');
-  if(adminSelectionMode && adminSelected.size>0){
-    bar.style.display='flex';
-    document.getElementById('adminSelectText').textContent = adminSelected.size + ' klan seçildi ✅';
-  } else {
-    bar.style.display='none';
-  }
-}
-function cancelAdminSelection(){ adminSelected.clear(); adminSelectionMode=false; updateAdminSelectBar(); renderAdminListIfOpen(); }
-function renderAdminListIfOpen(){ if(document.getElementById('adminPanel').style.display==='flex') renderAdminList(); }
-function hideSelectedClans(){
-  if(adminSelected.size===0) return;
-  if(!confirm(adminSelected.size + ' klanı sadece SENDEN gizleyeyim mi? Klanlar silinmeyecek, insanlar konuşmaya devam edecek! 🙈')) return;
-  // SADECE SENİN TELEFONUNDA GİZLE - BULUTTAN SİLME!
-  adminSelected.forEach(id=>{ if(!hiddenForAdmin.includes(id)) hiddenForAdmin.push(id); });
-  localStorage.setItem('hidden_clans_admin', JSON.stringify(hiddenForAdmin));
-  alert('Tamam! ' + adminSelected.size + ' klan senden gizlendi 🙈 Ama klanlar hala yaşıyor, insanlar konuşmaya devam ediyor!');
-  cancelAdminSelection();
-}
-function showHiddenClans(){
-  if(hiddenForAdmin.length===0){ alert('Gizli klan yok!'); return; }
-  hiddenForAdmin = [];
-  localStorage.setItem('hidden_clans_admin', JSON.stringify(hiddenForAdmin));
-  alert('Gizli klanların geri geldi! 👀');
-  cancelAdminSelection();
-}
+function enterAdminSelection(id){ adminSelectionMode = true; toggleAdminSelect(id); }
+function adminCardClick(id){ if(adminSelectionMode){ toggleAdminSelect(id); return; } adminViewClan(id); }
+function toggleAdminSelect(id){ if(adminSelected.has(id)) adminSelected.delete(id); else adminSelected.add(id); if(adminSelected.size===0) adminSelectionMode=false; renderAdminList(); }
+function updateAdminSelectBar(){ let bar = document.getElementById('adminSelectBar'); if(adminSelectionMode && adminSelected.size>0){ bar.style.display='flex'; document.getElementById('adminSelectText').textContent = adminSelected.size + ' klan seçildi ✅'; } else { bar.style.display='none'; } }
+function cancelAdminSelection(){ adminSelected.clear(); adminSelectionMode=false; updateAdminSelectBar(); if(document.getElementById('adminPanel').style.display==='flex') renderAdminList(); }
+function hideSelectedClans(){ if(adminSelected.size===0) return; if(!confirm(adminSelected.size + ' klanı sadece SENDEN gizleyeyim mi? Klanlar silinmeyecek, insanlar konuşmaya devam edecek! 🙈')) return; adminSelected.forEach(id=>{ if(!hiddenForAdmin.includes(id)) hiddenForAdmin.push(id); }); localStorage.setItem('hidden_clans_admin', JSON.stringify(hiddenForAdmin)); alert('Tamam! ' + adminSelected.size + ' klan senden gizlendi 🙈 Ama klanlar hala yaşıyor!'); cancelAdminSelection(); }
+function showHiddenClans(){ if(hiddenForAdmin.length===0){ alert('Gizli klan yok!'); return; } hiddenForAdmin = []; localStorage.setItem('hidden_clans_admin', JSON.stringify(hiddenForAdmin)); alert('Gizli klanların geri geldi! 👀'); cancelAdminSelection(); }
 function closeAdminPanel(){document.getElementById('adminPanel').style.display='none';cancelAdminSelection();if(isAdmin)document.getElementById('adminKlanlarBtn').style.display='block';}
 function adminViewClan(id){closeAdminPanel();let c=clans.find(x=>x.id===id);currentClanId=id;myName='👻 Admin (Secret)';document.getElementById('home').style.display='none';document.getElementById('chatScreen').style.display='flex';hideAdminBtn();document.getElementById('chatTitle').textContent=c.name+' [SECRET 👻]';document.getElementById('chatInfo').textContent=c.members.length+' '+T[lang].members+' • '+T[lang].secret;document.getElementById('memberList').innerHTML=c.members.map(m=>`<span class="member">👤 ${m}</span>`).join('');renderMessages();}
 function openChat(id,g=false){currentClanId=id;let c=clans.find(x=>x.id===id);document.getElementById('home').style.display='none';document.getElementById('chatScreen').style.display='flex';hideAdminBtn();document.getElementById('chatTitle').textContent=c.name+(g?' [SECRET 👻]':'');document.getElementById('chatInfo').textContent=c.members.length+' / 100000 '+T[lang].members;document.getElementById('memberList').innerHTML=c.members.map(m=>`<span class="member">👤 ${m}</span>`).join('');renderMessages();}
@@ -276,4 +257,4 @@ async function createPoll(){let q=document.getElementById('pollQ').value.trim();
 async function votePoll(msgIdx,optIdx){let c=clans.find(x=>x.id===currentClanId);let m=c.messages[msgIdx];if(!m||!m.poll)return;if(m.poll.votes[myName]!==undefined){alert('Zaten oy verdin! ✅');return;}m.poll.votes[myName]=optIdx;await saveCloud();renderMessages();if(navigator.vibrate)navigator.vibrate(30);}
 </script>
 </body>
-</html>
+                        </html>
