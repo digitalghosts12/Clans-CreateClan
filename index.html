@@ -84,7 +84,7 @@ input:focus{border-color:#00e676}
 #aiSendBtn{width:50px;height:50px;border-radius:50%;background:#7c3aed;border:2px solid #000;color:#fff;font-size:22px;cursor:pointer;flex-shrink:0}
 .aiQuick{display:flex;gap:8px;padding:0 12px 10px;background:#1a1a22;overflow-x:auto;white-space:nowrap}
 .aiQuick button{background:#222;border:1px solid #444;color:#fff;border-radius:20px;padding:8px 14px;font-size:13px;white-space:nowrap;cursor:pointer}
-#debugBox{background:#220a0a;border:2px solid #ff3b30;border-radius:14px;padding:10px;font-size:12px;text-align:left;word-break:break-all}
+#debugBox{background:#0a220a;border:2px solid #00e676;border-radius:14px;padding:10px;font-size:12px;text-align:left;word-break:break-all}
 </style>
 </head>
 <body>
@@ -96,19 +96,19 @@ input:focus{border-color:#00e676}
 <button class="mainBtn green" onclick="showCreate()">➕ <span data-t="createClan">KLAN OLUŞTUR</span></button>
 <button class="mainBtn yellow" onclick="showAra()">🔍 <span data-t="findClan">KLAN ARA</span></button>
 <div class="tipBox">💡 <span data-t="tip">İsim aynı olabilir! Şifre farklı olsun!</span><br><b>✋ <span data-t="dragTip">Admin, Dil ve Yapay Zeka butonlarına 1 saniye basılı tut, taşı</span></b></div>
-<div id="debugBox">🔍 <b>BAĞLANTI DURUMU:</b><br><span id="debugText">Yükleniyor...</span><br><br><button onclick="testConnection()" style="background:#00e676;border:2px solid #000;border-radius:12px;padding:10px;font-weight:900;width:100%">🔍 Bağlantıyı Test Et</button><br><br><button onclick="copyPantryId()" style="background:#ffd700;border:2px solid #000;border-radius:12px;padding:10px;font-weight:900;width:100%">📋 Pantry ID'yi Kopyala</button></div>
+<div id="debugBox">🟢 <b>ORTAK KUTU:</b><br><span id="debugText">Bağlanıyor...</span><br><br><button onclick="testConnection()" style="background:#00e676;border:2px solid #000;border-radius:12px;padding:10px;font-weight:900;width:100%">🔍 Bağlantıyı Test Et</button></div>
 </div>
 <div id="createBox" class="card hidden"><h3>➕ <span data-t="createClanTitle">Klan Oluştur</span></h3><p data-t="createDesc">İsim aynı olabilir, şifre farklı olsun!</p>
-<input id="createMyName" data-ph="yourName" placeholder="Adın: Örn Kaan">
-<input id="createPass" data-ph="password" placeholder="Şifre: Örn 0990" type="text" inputmode="text" autocomplete="off">
-<div class="exampleBox">📝 <span data-t="example">Örnek:</span> <b>Amin</b> + <b>0990</b></div>
-<button class="smallBtn green" onclick="createClan()"><span data-t="createBtn">KUR ✅</span></button>
+<input id="createMyName" placeholder="Adın: Örn Kaan">
+<input id="createPass" placeholder="Şifre: Örn 1234" type="text" autocomplete="off">
+<div class="exampleBox">📝 Örnek: <b>Kaan</b> + <b>1234</b></div>
+<button class="smallBtn green" onclick="createClan()">KUR ✅</button>
 <div class="backLink" onclick="backToMenu()">◀ <span data-t="back">Geri</span></div></div>
 <div id="araBox" class="card hidden"><h3>🔍 <span data-t="findClanTitle">Klan Ara</span></h3><p data-t="findDesc">İsim aynı olabilir, şifreyi doğru yaz yeter!</p>
-<input id="araMyName" data-ph="yourName" placeholder="Adın: Örn Nurani">
-<input id="araPass" data-ph="password" placeholder="Şifre: Örn 0990" type="text" inputmode="text" autocomplete="off">
-<div class="exampleBox">📝 <span data-t="example">Örnek:</span> <b>Nurani</b> + <b>0990</b></div>
-<button class="smallBtn yellow" onclick="araGir()"><span data-t="searchBtn">GİR 🔍</span></button>
+<input id="araMyName" placeholder="Adın: Örn Kaan">
+<input id="araPass" placeholder="Şifre: Örn 1234" type="text" autocomplete="off">
+<div class="exampleBox">📝 Örnek: <b>Kaan</b> + <b>1234</b></div>
+<button class="smallBtn yellow" onclick="araGir()">GİR 🔍</button>
 <div class="backLink" onclick="backToMenu()">◀ <span data-t="back">Geri</span></div></div>
 </div>
 </div>
@@ -118,14 +118,14 @@ input:focus{border-color:#00e676}
 <div id="messages"></div>
 <div id="inputBar">
 <button class="iconBtn pollBtn" onclick="togglePoll()">📊</button>
-<input id="msgInput" data-ph="writeMsg" placeholder="Mesaj yaz..." onkeydown="if(event.key==='Enter') sendMsg()">
+<input id="msgInput" placeholder="Mesaj yaz..." onkeydown="if(event.key==='Enter') sendMsg()">
 <button class="iconBtn sendBtn" onclick="sendMsg()">➤</button>
 <div id="pollPanel">
 <h3>📊 <span data-t="pollTitle">Anket Oluştur</span></h3>
-<input id="pollQ" data-ph="pollQ" placeholder="Sorun ne?">
-<input class="pollOptVal" data-ph="opt1" placeholder="Şık 1 - Evet">
-<input class="pollOptVal" data-ph="opt2" placeholder="Şık 2 - Hayır">
-<button class="smallBtn yellow" onclick="createPoll()"><span data-t="pollCreate">Anketi Oluştur</span></button>
+<input id="pollQ" placeholder="Sorun ne?">
+<input class="pollOptVal" placeholder="Şık 1 - Evet">
+<input class="pollOptVal" placeholder="Şık 2 - Hayır">
+<button class="smallBtn yellow" onclick="createPoll()">Anketi Oluştur</button>
 <button class="smallBtn" style="background:#fff;color:#000" onclick="togglePoll()">✕ <span data-t="cancel">İptal</span></button>
 </div>
 </div>
@@ -144,7 +144,7 @@ input:focus{border-color:#00e676}
 <button onclick="askAIQuick('Buzdolabı nasıl sökülür?')">🧊 Buzdolabı</button>
 </div>
 <div id="aiInputBar">
-<textarea id="aiInp" rows="1" data-ph="aiAsk" placeholder="Her şeyi sor..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAIMsg()}"></textarea>
+<textarea id="aiInp" rows="1" placeholder="Her şeyi sor..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAIMsg()}"></textarea>
 <button id="aiSendBtn" onclick="sendAIMsg()">➤</button>
 </div>
 </div>
@@ -158,73 +158,60 @@ input:focus{border-color:#00e676}
 </div>
 </div>
 <script>
-// ========== ⚠️ BURAYA PANTRY ID'Nİ YAZ! ==========
-// getpantry.cloud -> Create Pantry -> çıkan kodu buraya yapıştır
-// Örnek: let PANTRY_ID = "a1b2c3d4-1234-5678-90ab-cdef12345678";
-let PANTRY_ID = "BURAYA_YAPIŞTIR";
-let PANTRY_URL = "https://getpantry.cloud/apiv1/pantry/" + PANTRY_ID + "/basket/clans";
+// ========== ORTAK KUTU - ID YAZMANA GEREK YOK! ==========
+// Herkes aynı kutuyu kullanıyor: CLANS-AMIN-2026
+let KV_URL = "https://kvdb.io/CLANS-AMIN-2026/clans";
 let clans = [];
 let myName='', myMemberId='', currentClanId=null, isAdmin=false, ADMIN_PASS="tYgH12";
 let hiddenForAdmin = JSON.parse(localStorage.getItem('hidden_clans_admin_v3')||'[]');
 let adminSelected = new Set(), adminSelectionMode=false;
-
 function setDebug(txt){ let el=document.getElementById('debugText'); if(el) el.innerHTML=txt; }
-function copyPantryId(){ navigator.clipboard.writeText(PANTRY_ID).then(()=>alert('Kopyalandı: '+PANTRY_ID)).catch(()=>alert('Pantry ID: '+PANTRY_ID)); }
-
 async function getCloud(){
-  if(!PANTRY_ID || PANTRY_ID==="BURAYA_YAPIŞTIR"){
-    setDebug('❌ PANTRY ID YOK!<br>Yukarıdaki koda getpantry.cloud dan aldığın ID yi yazmadın!<br>Şu an sadece bu telefonda çalışıyor!');
-    return {clans: JSON.parse(localStorage.getItem('clans_v3')||'[]')};
-  }
   try{
-    let r = await fetch(PANTRY_URL);
-    if(r.status===404){
-      // İlk kez - boş basket oluştur
-      await fetch(PANTRY_URL, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({clans:[]})});
-      setDebug('✅ Bağlı! Pantry: '+PANTRY_ID.slice(0,8)+'...<br>Klan sayısı: 0<br>Herkes bu kutuyu kullanıyor!');
+    let r = await fetch(KV_URL);
+    let txt = await r.text();
+    if(!txt || txt==="null" || r.status===404){
+      setDebug('✅ Bağlı! Klan sayısı: 0<br>Herkes aynı kutuda!');
       return {clans:[]};
     }
-    let j = await r.json();
-    let list = j.clans || [];
-    setDebug('✅ Bağlı! Pantry: '+PANTRY_ID.slice(0,8)+'...<br>Klan sayısı: '+list.length+'<br>Şifreler: '+list.map(c=>c.pass).join(', '));
+    let j = JSON.parse(txt);
+    let list = j.clans || j || [];
+    if(!Array.isArray(list)) list = [];
+    setDebug('✅ Bağlı! Klan sayısı: '+list.length+'<br>Şifreler: '+(list.map(c=>c.pass).join(', ')||'YOK'));
     return {clans:list};
   }catch(e){
-    setDebug('❌ İnternet hatası: '+e.message+'<br>WiFi açık mı? Tekrar dene!');
+    setDebug('❌ İnternet hatası: '+e.message+'<br>Yerel kayıt kullanılıyor');
     return {clans: JSON.parse(localStorage.getItem('clans_v3')||'[]')};
   }
 }
 async function saveCloud(){
   localStorage.setItem('clans_v3', JSON.stringify(clans));
-  if(!PANTRY_ID || PANTRY_ID==="BURAYA_YAPIŞTIR") return;
   try{
-    await fetch(PANTRY_URL, {method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify({clans:clans})});
-    setDebug('✅ Kaydedildi! Klan sayısı: '+clans.length+'<br>Şifreler: '+clans.map(c=>c.pass).join(', '));
+    await fetch(KV_URL, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({clans:clans})});
+    setDebug('✅ Kaydedildi! Klan: '+clans.length+' Şifreler: '+clans.map(c=>c.pass).join(', '));
   }catch(e){ setDebug('❌ Kaydedilemedi: '+e.message); }
 }
 async function testConnection(){
   setDebug('⏳ Test ediliyor...');
-  let d = await getCloud();
-  clans = d.clans || [];
-  alert('Test Sonucu:\nPantry: '+PANTRY_ID+'\nKlan sayısı: '+clans.length+'\nŞifreler: '+(clans.map(c=>c.pass).join(', ')||'YOK'));
+  let d = await getCloud(); clans = d.clans || [];
+  alert('Test Sonucu:\nKlan sayısı: '+clans.length+'\nŞifreler: '+(clans.map(c=>c.pass).join(', ')||'YOK')+'\n\nEğer 0 ise önce bir telefonda klan kur, sonra diğer telefonda Test Et e bas!');
 }
 async function refreshClans(){ let d = await getCloud(); clans = d.clans || []; }
-
 let lang = localStorage.getItem('clans_lang')||'tr';
-let LANGS=[{code:'tr',flag:'🇹🇷',name:'Türkçe'},{code:'en',flag:'🇬🇧',name:'English'},{code:'az',flag:'🇦🇿',name:'Azərbaycanca'},{code:'ru',flag:'🇷🇺',name:'Русский'},{code:'es',flag:'🇪🇸',name:'Español'},{code:'fr',flag:'🇫🇷',name:'Français'},{code:'de',flag:'🇩🇪',name:'Deutsch'},{code:'it',flag:'🇮🇹',name:'Italiano'},{code:'pt',flag:'🇵🇹',name:'Português'},{code:'ar',flag:'🇸🇦',name:'العربية'},{code:'hi',flag:'🇮🇳',name:'हिन्दी'},{code:'ja',flag:'🇯🇵',name:'日本語'},{code:'ko',flag:'🇰🇷',name:'한국어'},{code:'zh',flag:'🇨🇳',name:'中文'}];
-let LANG_NAMES={tr:'Türkçe',en:'English',az:'Azərbaycanca',ru:'Русский',es:'Español',fr:'Français',de:'Deutsch',it:'Italiano',pt:'Português',ar:'Arapça',hi:'Hintçe',ja:'Japonca',ko:'Korece',zh:'Çince'};
+let LANGS=[{code:'tr',flag:'🇹🇷',name:'Türkçe'},{code:'en',flag:'🇬🇧',name:'English'},{code:'az',flag:'🇦🇿',name:'Azərbaycanca'},{code:'ru',flag:'🇷🇺',name:'Русский'},{code:'es',flag:'🇪🇸',name:'Español'},{code:'fr',flag:'🇫🇷',name:'Français'},{code:'de',flag:'🇩🇪',name:'Deutsch'},{code:'it',flag:'🇮🇹',name:'Italiano'},{code:'pt',flag:'🇵🇹',name:'Português'},{code:'ar',flag:'🇸🇦',name:'العربية'}];
+let LANG_NAMES={tr:'Türkçe',en:'English',az:'Azərbaycanca',ru:'Русский',es:'Español',fr:'Français',de:'Deutsch',it:'Italiano',pt:'Português',ar:'Arapça'};
 let T={
-tr:{subtitle:"Herkes Çıkınca Şifre Boşalır!",viewClans:"Klanları Gör",createClan:"KLAN OLUŞTUR",findClan:"KLAN ARA",createClanTitle:"Klan Oluştur",createDesc:"İsim aynı olabilir, şifre farklı olsun!",createBtn:"KUR ✅",back:"Geri",findClanTitle:"Klan Ara",findDesc:"İsim aynı olabilir, şifreyi doğru yaz yeter!",searchBtn:"GİR 🔍",leave:"Çık",leave2:"Çık",admin:"Admin",allClans:"Tüm Klanlar",close:"Kapat",totalClans:"Toplam Klan",chooseLang:"Dil Seç",chooseLangSub:"Seç, her şey çevrilsin!",tip:"İsim aynı olabilir! Şifre farklı olsun!",dragTip:"Admin, Dil ve Yapay Zeka butonlarına 1 saniye basılı tut, taşı",dragSub:"İstediğin yere sürükle, bırak!",dragging:"Taşıyorsun... Bırak!",pollTitle:"Anket Oluştur",pollCreate:"Anketi Oluştur",cancel:"İptal",adminHint:"1 sn basılı tut = Seç",hideFromMe:"Benden Gizle",showHidden:"Gizli Klanları Geri Göster",yourName:"Adın: Örn Kaan",password:"Şifre: Örn 0990",writeMsg:"Mesaj yaz...",pollQ:"Sorun ne?",opt1:"Şık 1 - Evet",opt2:"Şık 2 - Hayır",created:"bu şifreyle yeni klan kurdu! 🎉 Şifre:",joined:"klana katıldı! 👋",people:"kişi",totalVotes:"Toplam",votes:"oy",alreadyVoted:"Zaten oy verdin!",writeNamePass:"Adını + Şifreni yaz!",passTaken:"Bu şifre dolu! Başka şifre dene!",noPass:"Böyle bir şifre yok! Klan silinmiş olabilir!",clanFull:"Klan doldu!",example:"Örnek:",aiBtn:"Yapay Zeka",aiSub:"Her Soruya Cevap Verir • Bedava",newChat:"Yeni",aiTyping:"CLANS AI yazıyor...",aiAsk:"Her şeyi sor...",aiWelcome:"Selam Amin! 👋 Ben CLANS AI! Bana HER ŞEYİ sor!"},
-en:{subtitle:"When Everyone Leaves, Password Frees!",viewClans:"View Clans",createClan:"CREATE CLAN",findClan:"FIND CLAN",createClanTitle:"Create Clan",createDesc:"Name can be same, password must be different!",createBtn:"CREATE ✅",back:"Back",findClanTitle:"Find Clan",findDesc:"Name can be same, just write password correctly!",searchBtn:"JOIN 🔍",leave:"Leave",leave2:"Leave",admin:"Admin",allClans:"All Clans",close:"Close",totalClans:"Total Clans",chooseLang:"Choose Language",chooseLangSub:"Choose, everything will translate!",tip:"Name can be same!",dragTip:"Hold Admin, Language and AI buttons for 1 second, drag",dragSub:"Drag anywhere!",dragging:"Dragging...",pollTitle:"Create Poll",pollCreate:"Create Poll",cancel:"Cancel",adminHint:"Hold 1 sec = Select",hideFromMe:"Hide From Me",showHidden:"Show Hidden Clans",yourName:"Your Name",password:"Password: e.g. 0990",writeMsg:"Write message...",pollQ:"What is question?",opt1:"Option 1 - Yes",opt2:"Option 2 - No",created:"created a new clan! Password:",joined:"joined! 👋",people:"people",totalVotes:"Total",votes:"votes",alreadyVoted:"You already voted!",writeNamePass:"Write name + password!",passTaken:"Password taken!",noPass:"No such password!",clanFull:"Clan is full!",example:"Example:",aiBtn:"AI",aiSub:"Answers Everything • Free",newChat:"New",aiTyping:"CLANS AI is typing...",aiAsk:"Ask anything...",aiWelcome:"Hi Amin! 👋 I'm CLANS AI! Ask me ANYTHING!"},
-es:{subtitle:"¡Cuando todos se van, la contraseña se libera!",viewClans:"Ver Clanes",createClan:"CREAR CLAN",findClan:"BUSCAR CLAN",createClanTitle:"Crear Clan",createDesc:"¡El nombre puede ser igual!",createBtn:"CREAR ✅",back:"Atrás",findClanTitle:"Buscar Clan",findDesc:"¡Solo escribe la contraseña!",searchBtn:"ENTRAR 🔍",leave:"Salir",leave2:"Salir",admin:"Admin",allClans:"Todos los Clanes",close:"Cerrar",totalClans:"Total de Clanes",chooseLang:"Elegir Idioma",chooseLangSub:"¡Elige!",tip:"¡El nombre puede ser igual!",dragTip:"Mantén 1 segundo, arrastra",dragSub:"¡Arrastra!",dragging:"¡Arrastrando!",pollTitle:"Crear Encuesta",pollCreate:"Crear Encuesta",cancel:"Cancelar",adminHint:"Mantén 1 seg",hideFromMe:"Ocultar de mí",showHidden:"Mostrar Ocultos",yourName:"Tu nombre",password:"Contraseña: ej. 0990",writeMsg:"Escribe...",pollQ:"¿Pregunta?",opt1:"Opción 1 - Sí",opt2:"Opción 2 - No",created:"¡creó un clan! Contraseña:",joined:"¡se unió! 👋",people:"personas",totalVotes:"Total",votes:"votos",alreadyVoted:"¡Ya votaste!",writeNamePass:"¡Escribe nombre + contraseña!",passTaken:"¡Ocupada!",noPass:"¡No existe!",clanFull:"¡Lleno!",example:"Ejemplo:",aiBtn:"IA",aiSub:"Responde Todo • Gratis",newChat:"Nuevo",aiTyping:"CLANS AI escribe...",aiAsk:"Pregunta lo que sea...",aiWelcome:"¡Hola Amin! 👋 ¡Soy CLANS AI!"},
-fr:{subtitle:"Quand tout le monde part, le mot de passe se libère !",viewClans:"Voir les Clans",createClan:"CRÉER UN CLAN",findClan:"CHERCHER UN CLAN",createClanTitle:"Créer un Clan",createDesc:"Le nom peut être le même!",createBtn:"CRÉER ✅",back:"Retour",findClanTitle:"Chercher un Clan",findDesc:"Écris le mot de passe!",searchBtn:"ENTRER 🔍",leave:"Quitter",leave2:"Quitter",admin:"Admin",allClans:"Tous les Clans",close:"Fermer",totalClans:"Total",chooseLang:"Choisir la Langue",chooseLangSub:"Choisis!",tip:"Le nom peut être le même!",dragTip:"Maintiens 1 sec, déplace",dragSub:"Fais glisser!",dragging:"Tu déplaces...",pollTitle:"Créer un Sondage",pollCreate:"Créer",cancel:"Annuler",adminHint:"Maintiens 1 sec",hideFromMe:"Masquer",showHidden:"Afficher Masqués",yourName:"Ton nom",password:"Mot de passe: 0990",writeMsg:"Écrire...",pollQ:"Question?",opt1:"Option 1 - Oui",opt2:"Option 2 - Non",created:"a créé un clan! Mot de passe:",joined:"a rejoint! 👋",people:"personnes",totalVotes:"Total",votes:"votes",alreadyVoted:"Tu as déjà voté!",writeNamePass:"Écris nom + mot de passe!",passTaken:"Pris!",noPass:"Pas de tel mot de passe!",clanFull:"Plein!",example:"Exemple:",aiBtn:"IA",aiSub:"Répond à Tout • Gratuit",newChat:"Nouveau",aiTyping:"CLANS AI écrit...",aiAsk:"Demande tout...",aiWelcome:"Salut Amin! 👋 Je suis CLANS AI!"},
-az:{subtitle:"Hamı Çıxanda Şifrə Boşalır!",viewClans:"Klanlara Bax",createClan:"KLAN YARAT",findClan:"KLAN TAP",createClanTitle:"Klan Yarat",createDesc:"Ad eyni ola bilər!",createBtn:"YARAT ✅",back:"Geri",findClanTitle:"Klan Tap",findDesc:"Şifrəni düz yaz!",searchBtn:"GİR 🔍",leave:"Çıx",leave2:"Çıx",admin:"Admin",allClans:"Bütün Klanlar",close:"Bağla",totalClans:"Ümumi Klan",chooseLang:"Dil Seç",chooseLangSub:"Seç!",tip:"Ad eyni ola bilər!",dragTip:"1 saniyə bas, daşı",dragSub:"Sürüklə!",dragging:"Daşıyırsan...",pollTitle:"Anket Yarat",pollCreate:"Yarat",cancel:"Ləğv et",adminHint:"1 saniyə bas",hideFromMe:"Məndən Gizlə",showHidden:"Gizliləri Göstər",yourName:"Adın",password:"Şifrə: 0990",writeMsg:"Mesaj yaz...",pollQ:"Sual?",opt1:"Variant 1 - Bəli",opt2:"Variant 2 - Xeyr",created:"klan yaratdı! Şifrə:",joined:"qatıldı! 👋",people:"nəfər",totalVotes:"Ümumi",votes:"səs",alreadyVoted:"Artıq səs vermisən!",writeNamePass:"Ad + Şifrə yaz!",passTaken:"Dolu!",noPass:"Belə şifrə yoxdur!",clanFull:"Dolu!",example:"Nümunə:",aiBtn:"Süni İntellekt",aiSub:"Hər Şeyə Cavab Verir",newChat:"Yeni",aiTyping:"CLANS AI yazır...",aiAsk:"Hər şeyi sor...",aiWelcome:"Salam Amin! 👋 Mən CLANS AI-yəm!"},
-ru:{subtitle:"Когда все выйдут, пароль освободится!",viewClans:"Посмотреть Кланы",createClan:"СОЗДАТЬ КЛАН",findClan:"НАЙТИ КЛАН",createClanTitle:"Создать Клан",createDesc:"Имя может быть одинаковым!",createBtn:"СОЗДАТЬ ✅",back:"Назад",findClanTitle:"Найти Клан",findDesc:"Напиши пароль!",searchBtn:"ВОЙТИ 🔍",leave:"Выйти",leave2:"Выйти",admin:"Админ",allClans:"Все Кланы",close:"Закрыть",totalClans:"Всего",chooseLang:"Выбрать Язык",chooseLangSub:"Выбери!",tip:"Имя может быть одинаковым!",dragTip:"Держи 1 сек, перетаскивай",dragSub:"Перетащи!",dragging:"Перетаскиваешь...",pollTitle:"Создать Опрос",pollCreate:"Создать",cancel:"Отмена",adminHint:"Держи 1 сек",hideFromMe:"Скрыть",showHidden:"Показать скрытые",yourName:"Твоё имя",password:"Пароль: 0990",writeMsg:"Написать...",pollQ:"Вопрос?",opt1:"Вариант 1 - Да",opt2:"Вариант 2 - Нет",created:"создал клан! Пароль:",joined:"вошёл! 👋",people:"человек",totalVotes:"Всего",votes:"голосов",alreadyVoted:"Ты уже голосовал!",writeNamePass:"Напиши имя + пароль!",passTaken:"Занят!",noPass:"Нет такого пароля!",clanFull:"Полон!",example:"Пример:",aiBtn:"ИИ",aiSub:"Отвечает на Всё",newChat:"Новый",aiTyping:"CLANS AI пишет...",aiAsk:"Спроси всё...",aiWelcome:"Привет, Амин! 👋 Я CLANS AI!"}
+tr:{subtitle:"Herkes Çıkınca Şifre Boşalır!",viewClans:"Klanları Gör",createClan:"KLAN OLUŞTUR",findClan:"KLAN ARA",createClanTitle:"Klan Oluştur",createDesc:"İsim aynı olabilir, şifre farklı olsun!",createBtn:"KUR ✅",back:"Geri",findClanTitle:"Klan Ara",findDesc:"İsim aynı olabilir, şifreyi doğru yaz yeter!",searchBtn:"GİR 🔍",leave:"Çık",leave2:"Çık",admin:"Admin",allClans:"Tüm Klanlar",close:"Kapat",totalClans:"Toplam Klan",chooseLang:"Dil Seç",tip:"İsim aynı olabilir! Şifre farklı olsun!",dragTip:"Admin, Dil ve Yapay Zeka butonlarına 1 saniye basılı tut, taşı",dragging:"Taşıyorsun... Bırak!",pollTitle:"Anket Oluştur",pollCreate:"Anketi Oluştur",cancel:"İptal",adminHint:"1 sn basılı tut = Seç",hideFromMe:"Benden Gizle",showHidden:"Gizli Klanları Geri Göster",passwordLabel:"Şifre",writeMsg:"Mesaj yaz...",pollQ:"Sorun ne?",opt1:"Şık 1 - Evet",opt2:"Şık 2 - Hayır",created:"bu şifreyle yeni klan kurdu! 🎉 Şifre:",joined:"klana katıldı! 👋",people:"kişi",totalVotes:"Toplam",votes:"oy",alreadyVoted:"Zaten oy verdin!",writeNamePass:"Adını + Şifreni yaz!",passTaken:"Bu şifre dolu! Başka şifre dene!",noPass:"Böyle bir şifre yok! Klan silinmiş olabilir!",clanFull:"Klan doldu!",aiBtn:"Yapay Zeka",aiSub:"Her Soruya Cevap Verir • Bedava",newChat:"Yeni",aiTyping:"CLANS AI yazıyor...",aiWelcome:"Selam Amin! 👋 Ben CLANS AI! Bana HER ŞEYİ sor!"},
+en:{subtitle:"When Everyone Leaves, Password Frees!",viewClans:"View Clans",createClan:"CREATE CLAN",findClan:"FIND CLAN",createClanTitle:"Create Clan",createDesc:"Name can be same!",createBtn:"CREATE ✅",back:"Back",findClanTitle:"Find Clan",findDesc:"Just write password!",searchBtn:"JOIN 🔍",leave:"Leave",leave2:"Leave",admin:"Admin",allClans:"All Clans",close:"Close",totalClans:"Total Clans",chooseLang:"Choose Language",tip:"Name can be same!",dragTip:"Hold Admin, Language and AI buttons for 1 second, drag",dragging:"Dragging...",pollTitle:"Create Poll",pollCreate:"Create Poll",cancel:"Cancel",adminHint:"Hold 1 sec",hideFromMe:"Hide From Me",showHidden:"Show Hidden Clans",passwordLabel:"Password",writeMsg:"Write message...",pollQ:"Question?",opt1:"Option 1 - Yes",opt2:"Option 2 - No",created:"created a new clan! Password:",joined:"joined! 👋",people:"people",totalVotes:"Total",votes:"votes",alreadyVoted:"You already voted!",writeNamePass:"Write name + password!",passTaken:"Password taken!",noPass:"No such password!",clanFull:"Clan is full!",aiBtn:"AI",aiSub:"Answers Everything • Free",newChat:"New",aiTyping:"CLANS AI is typing...",aiWelcome:"Hi Amin! 👋 I'm CLANS AI!"},
+es:{subtitle:"¡Cuando todos se van, la contraseña se libera!",viewClans:"Ver Clanes",createClan:"CREAR CLAN",findClan:"BUSCAR CLAN",createClanTitle:"Crear Clan",createDesc:"¡El nombre puede ser igual!",createBtn:"CREAR ✅",back:"Atrás",findClanTitle:"Buscar Clan",findDesc:"¡Solo escribe la contraseña!",searchBtn:"ENTRAR 🔍",leave:"Salir",leave2:"Salir",admin:"Admin",allClans:"Todos los Clanes",close:"Cerrar",totalClans:"Total",chooseLang:"Elegir Idioma",tip:"¡El nombre puede ser igual!",dragTip:"Mantén 1 segundo, arrastra",dragging:"¡Arrastrando!",pollTitle:"Crear Encuesta",pollCreate:"Crear Encuesta",cancel:"Cancelar",adminHint:"Mantén 1 seg",hideFromMe:"Ocultar de mí",showHidden:"Mostrar Ocultos",passwordLabel:"Contraseña",writeMsg:"Escribe...",pollQ:"¿Pregunta?",opt1:"Opción 1 - Sí",opt2:"Opción 2 - No",created:"¡creó un clan! Contraseña:",joined:"¡se unió! 👋",people:"personas",totalVotes:"Total",votes:"votos",alreadyVoted:"¡Ya votaste!",writeNamePass:"¡Escribe nombre + contraseña!",passTaken:"¡Ocupada!",noPass:"¡No existe!",clanFull:"¡Lleno!",aiBtn:"IA",aiSub:"Responde Todo • Gratis",newChat:"Nuevo",aiTyping:"CLANS AI escribe...",aiWelcome:"¡Hola Amin! 👋 ¡Soy CLANS AI!"},
+fr:{subtitle:"Quand tout le monde part, le mot de passe se libère !",viewClans:"Voir les Clans",createClan:"CRÉER UN CLAN",findClan:"CHERCHER UN CLAN",createClanTitle:"Créer un Clan",createDesc:"Le nom peut être le même!",createBtn:"CRÉER ✅",back:"Retour",findClanTitle:"Chercher un Clan",findDesc:"Écris le mot de passe!",searchBtn:"ENTRER 🔍",leave:"Quitter",leave2:"Quitter",admin:"Admin",allClans:"Tous les Clans",close:"Fermer",totalClans:"Total",chooseLang:"Choisir la Langue",tip:"Le nom peut être le même!",dragTip:"Maintiens 1 sec, déplace",dragging:"Tu déplaces...",pollTitle:"Créer un Sondage",pollCreate:"Créer",cancel:"Annuler",adminHint:"Maintiens 1 sec",hideFromMe:"Masquer",showHidden:"Afficher Masqués",passwordLabel:"Mot de passe",writeMsg:"Écrire...",pollQ:"Question?",opt1:"Option 1 - Oui",opt2:"Option 2 - Non",created:"a créé un clan! Mot de passe:",joined:"a rejoint! 👋",people:"personnes",totalVotes:"Total",votes:"votes",alreadyVoted:"Tu as déjà voté!",writeNamePass:"Écris nom + mot de passe!",passTaken:"Pris!",noPass:"Pas de tel mot de passe!",clanFull:"Plein!",aiBtn:"IA",aiSub:"Répond à Tout • Gratuit",newChat:"Nouveau",aiTyping:"CLANS AI écrit...",aiWelcome:"Salut Amin! 👋 Je suis CLANS AI!"},
+az:{subtitle:"Hamı Çıxanda Şifrə Boşalır!",viewClans:"Klanlara Bax",createClan:"KLAN YARAT",findClan:"KLAN TAP",createClanTitle:"Klan Yarat",createDesc:"Ad eyni ola bilər!",createBtn:"YARAT ✅",back:"Geri",findClanTitle:"Klan Tap",findDesc:"Şifrəni düz yaz!",searchBtn:"GİR 🔍",leave:"Çıx",leave2:"Çıx",admin:"Admin",allClans:"Bütün Klanlar",close:"Bağla",totalClans:"Ümumi Klan",chooseLang:"Dil Seç",tip:"Ad eyni ola bilər!",dragTip:"1 saniyə bas, daşı",dragging:"Daşıyırsan...",pollTitle:"Anket Yarat",pollCreate:"Yarat",cancel:"Ləğv et",adminHint:"1 saniyə bas",hideFromMe:"Məndən Gizlə",showHidden:"Gizliləri Göstər",passwordLabel:"Şifrə",writeMsg:"Mesaj yaz...",pollQ:"Sual?",opt1:"Variant 1 - Bəli",opt2:"Variant 2 - Xeyr",created:"klan yaratdı! Şifrə:",joined:"qatıldı! 👋",people:"nəfər",totalVotes:"Ümumi",votes:"səs",alreadyVoted:"Artıq səs vermisən!",writeNamePass:"Ad + Şifrə yaz!",passTaken:"Dolu!",noPass:"Belə şifrə yoxdur!",clanFull:"Dolu!",aiBtn:"Süni İntellekt",aiSub:"Hər Şeyə Cavab Verir",newChat:"Yeni",aiTyping:"CLANS AI yazır...",aiWelcome:"Salam Amin! 👋 Mən CLANS AI-yəm!"},
+ru:{subtitle:"Когда все выйдут, пароль освободится!",viewClans:"Посмотреть Кланы",createClan:"СОЗДАТЬ КЛАН",findClan:"НАЙТИ КЛАН",createClanTitle:"Создать Клан",createDesc:"Имя может быть одинаковым!",createBtn:"СОЗДАТЬ ✅",back:"Назад",findClanTitle:"Найти Клан",findDesc:"Напиши пароль!",searchBtn:"ВОЙТИ 🔍",leave:"Выйти",leave2:"Выйти",admin:"Админ",allClans:"Все Кланы",close:"Закрыть",totalClans:"Всего",chooseLang:"Выбрать Язык",tip:"Имя может быть одинаковым!",dragTip:"Держи 1 сек, перетаскивай",dragging:"Перетаскиваешь...",pollTitle:"Создать Опрос",pollCreate:"Создать",cancel:"Отмена",adminHint:"Держи 1 сек",hideFromMe:"Скрыть",showHidden:"Показать скрытые",passwordLabel:"Пароль",writeMsg:"Написать...",pollQ:"Вопрос?",opt1:"Вариант 1 - Да",opt2:"Вариант 2 - Нет",created:"создал клан! Пароль:",joined:"вошёл! 👋",people:"человек",totalVotes:"Всего",votes:"голосов",alreadyVoted:"Ты уже голосовал!",writeNamePass:"Напиши имя + пароль!",passTaken:"Занят!",noPass:"Нет такого пароля!",clanFull:"Полон!",aiBtn:"ИИ",aiSub:"Отвечает на Всё",newChat:"Новый",aiTyping:"CLANS AI пишет...",aiWelcome:"Привет, Амин! 👋 Я CLANS AI!"}
 };
-['de','it','pt','ar','hi','ja','ko','zh','nl','sv','uk','pl'].forEach(c=>{ if(!T[c]) T[c]=T.en; });
+['de','it','pt','ar','hi','ja','ko','zh'].forEach(c=>{ if(!T[c]) T[c]=T.en; });
 function t(k){ return (T[lang]&&T[lang][k])||T['tr'][k]||k; }
 function applyLang(){
   document.querySelectorAll('[data-t]').forEach(el=>{ el.textContent=t(el.getAttribute('data-t')); });
-  document.querySelectorAll('[data-ph]').forEach(el=>{ el.placeholder=t(el.getAttribute('data-ph')); });
   document.getElementById('langBtn').textContent='🌐 '+lang.toUpperCase();
   localStorage.setItem('clans_lang',lang);
   renderLangList(); renderAIChat();
@@ -261,22 +248,22 @@ async function createClan(){
   if(c){ alert(t('passTaken')); return; }
   myMemberId='u_'+Date.now()+'_'+Math.floor(Math.random()*1000000); myName=name;
   c={id:Date.now(), pass:String(pass), members:[{id:myMemberId, name:name}], messages:[{user:'Sistem', uid:'sys', sys:'created', name:name, pass:String(pass), time:'Şimdi'}]};
-  clans.push(c); await saveCloud(); alert('✅ Klan kuruldu! Şifre: '+pass+'\nŞimdi annenin telefonunda dene!'); openChat(c.id);
+  clans.push(c); await saveCloud(); alert('✅ Klan kuruldu! Şifre: '+pass+'\nŞimdi diğer telefonda KLAN ARA -> '+pass+' yaz!'); openChat(c.id);
 }
 async function araGir(){
   let name=document.getElementById('araMyName').value.trim();
   let pass=document.getElementById('araPass').value.trim();
   if(!name||!pass){ alert(t('writeNamePass')); return; }
   await refreshClans();
-  alert('Aranıyor... Şifre: ['+pass+']\nBulunan şifreler: ['+clans.map(c=>c.pass).join(', ')+']');
+  alert('Aranıyor... Yazdığın: ['+pass+']\nKutudaki şifreler: ['+clans.map(c=>c.pass).join(', ')+']');
   let c=clans.find(x=>String(x.pass).trim()===String(pass).trim());
-  if(!c){ alert(t('noPass') + " (Aradın: " + pass + " / Var olan: " + clans.map(x=>x.pass).join(', ') + ")"); return; }
+  if(!c){ alert(t('noPass')+' (Yazdın: '+pass+' / Var olan: '+clans.map(x=>x.pass).join(', ')+')'); return; }
   myMemberId='u_'+Date.now()+'_'+Math.floor(Math.random()*1000000); myName=name;
   c.members.push({id:myMemberId, name:name});
   c.messages.push({user:'Sistem', uid:'sys', sys:'joined', name:name, time:'Şimdi'});
   await saveCloud(); openChat(c.id);
 }
-function openChat(id){ currentClanId=id; let c=clans.find(x=>x.id===id); document.getElementById('home').style.display='none'; document.getElementById('chatScreen').style.display='flex'; hideHomeButtons(); document.getElementById('chatTitle').textContent='🔐 '+t('password')+' : '+c.pass+' Klan'; renderAll(); }
+function openChat(id){ currentClanId=id; let c=clans.find(x=>x.id===id); document.getElementById('home').style.display='none'; document.getElementById('chatScreen').style.display='flex'; hideHomeButtons(); document.getElementById('chatTitle').textContent='🔐 '+t('passwordLabel')+' : '+c.pass+' Klan'; renderAll(); }
 function sysText(m){ if(m.sys==='created') return escapeHtml(m.name)+' '+t('created')+' '+escapeHtml(m.pass); if(m.sys==='joined') return escapeHtml(m.name)+' '+t('joined'); return escapeHtml(m.text||''); }
 function renderAll(){
   let c=clans.find(x=>x.id===currentClanId); if(!c) return;
@@ -301,7 +288,7 @@ function renderAdminList(){
   let visible=clans.filter(c=>!hiddenForAdmin.includes(c.id));
   document.getElementById('totalClan').textContent=visible.length+' / '+clans.length;
   document.getElementById('hiddenCount').textContent=hiddenForAdmin.length?`• 🙈 ${hiddenForAdmin.length}`:'';
-  document.getElementById('adminList').innerHTML=visible.map(c=>{ let names=c.members.map(m=>typeof m==='string'?m:m.name).join(', '); return `<div class="adminCard ${adminSelected.has(c.id)?'selected':''}" data-id="${c.id}" onclick="adminCardClick(${c.id})"><b>🔐 ${t('password')}: ${escapeHtml(c.pass)} ${adminSelected.has(c.id)?'✅':''}</b><p>👥 ${names} • 💬 ${c.messages.length} mesaj</p></div>`; }).join('')||'<p style="text-align:center;opacity:.6;padding:20px">Hiç klan yok 🙈</p>';
+  document.getElementById('adminList').innerHTML=visible.map(c=>{ let names=c.members.map(m=>typeof m==='string'?m:m.name).join(', '); return `<div class="adminCard ${adminSelected.has(c.id)?'selected':''}" data-id="${c.id}" onclick="adminCardClick(${c.id})"><b>🔐 ${t('passwordLabel')}: ${escapeHtml(c.pass)} ${adminSelected.has(c.id)?'✅':''}</b><p>👥 ${names} • 💬 ${c.messages.length} mesaj</p></div>`; }).join('')||'<p style="text-align:center;opacity:.6;padding:20px">Hiç klan yok 🙈</p>';
   attachAdminLongPress(); updateAdminSelectBar();
 }
 function attachAdminLongPress(){ document.querySelectorAll('.adminCard').forEach(el=>{ let id=parseInt(el.dataset.id), timer=null; el.addEventListener('touchstart', ()=>{ timer=setTimeout(()=>{ enterAdminSelection(id); if(navigator.vibrate) navigator.vibrate(80); },1000); }, {passive:true}); el.addEventListener('touchmove', ()=>clearTimeout(timer)); el.addEventListener('touchend', ()=>clearTimeout(timer)); }); }
@@ -313,7 +300,7 @@ function cancelAdminSelection(){ adminSelected.clear(); adminSelectionMode=false
 function hideSelectedClans(){ if(adminSelected.size===0) return; adminSelected.forEach(id=>{ if(!hiddenForAdmin.includes(id)) hiddenForAdmin.push(id); }); localStorage.setItem('hidden_clans_admin_v3', JSON.stringify(hiddenForAdmin)); cancelAdminSelection(); }
 function showHiddenClans(){ hiddenForAdmin=[]; localStorage.setItem('hidden_clans_admin_v3', JSON.stringify(hiddenForAdmin)); cancelAdminSelection(); }
 function closeAdminPanel(){ document.getElementById('adminPanel').style.display='none'; cancelAdminSelection(); if(isAdmin) document.getElementById('adminKlanlarBtn').style.display='block'; }
-function adminViewClan(id){ closeAdminPanel(); let c=clans.find(x=>x.id===id); currentClanId=id; myName='👻 Admin'; myMemberId='admin_'+Date.now(); document.getElementById('home').style.display='none'; document.getElementById('chatScreen').style.display='flex'; hideHomeButtons(); document.getElementById('chatTitle').textContent='🔐 '+t('password')+': '+c.pass+' [GİZLİ 👻]'; renderAll(); }
+function adminViewClan(id){ closeAdminPanel(); let c=clans.find(x=>x.id===id); currentClanId=id; myName='👻 Admin'; myMemberId='admin_'+Date.now(); document.getElementById('home').style.display='none'; document.getElementById('chatScreen').style.display='flex'; hideHomeButtons(); document.getElementById('chatTitle').textContent='🔐 '+t('passwordLabel')+': '+c.pass+' [GİZLİ 👻]'; renderAll(); }
 document.getElementById('adminBtn').addEventListener('click', ()=>{ if(!document.getElementById('adminBtn').classList.contains('dragging')) adminLogin(); });
 document.getElementById('langBtn').addEventListener('click', ()=>{ if(!document.getElementById('langBtn').classList.contains('dragging')) openLang(); });
 document.getElementById('aiBtn').addEventListener('click', ()=>{ if(!document.getElementById('aiBtn').classList.contains('dragging')) openAI(); });
@@ -337,7 +324,7 @@ function localKnowledge(q){
   if(s.includes('televizyon')) return `📺 TV: Fişi tak, kumandadaki kırmızı düğmeye bas!`;
   if(s.includes('buzdolabı')) return `🧊 BUZDOLABI: ÖNCE FİŞİ ÇEK! Sonra rafları çıkar. Tek başına yapma!`;
   if(s.includes('fıkra')) return `😂 Temel: Ben patatesim! 🥔😂`;
-  if(s.includes('hikaye')) return `📖 Kaan ve Sihirli Klan: Kaan CLANS buldu, şifre 0990'du!`;
+  if(s.includes('hikaye')) return `📖 Kaan ve Sihirli Klan: Kaan CLANS buldu, şifre 1234'tü!`;
   return null;
 }
 async function sendAIMsg(){
@@ -353,9 +340,9 @@ async function sendAIMsg(){
     if(ans && ans.length>10){ document.getElementById('aiTyping').style.display='none'; aiHistory.push({role:'ai', text:ans.slice(0,3000)}); localStorage.setItem('clans_ai_hist', JSON.stringify(aiHistory.slice(-40))); renderAIChat(); return; }
   }catch(e){}
   document.getElementById('aiTyping').style.display='none';
-  aiHistory.push({role:'ai', text:`Harika soru Amin! 😎 "${txt}" - Adım adım anlatayım: Önce malzemeleri hazırla, güvenli yerde çalış, acele etme! Daha detaylı sor!`});
+  aiHistory.push({role:'ai', text:`Harika soru Amin! 😎 "${txt}" - Adım adım anlatayım: Önce malzemeleri hazırla, güvenli yerde çalış, acele etme!`});
   localStorage.setItem('clans_ai_hist', JSON.stringify(aiHistory.slice(-40))); renderAIChat();
 }
 </script>
 </body>
-  </html>
+  </html> 
