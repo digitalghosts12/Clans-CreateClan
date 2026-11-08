@@ -3,24 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>CLANS - Sadece Şifre!</title>
+<title>CLANS</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
 body{margin:0;font-family:Arial,sans-serif;background:#05070d;color:#fff;overflow:hidden}
-#app{width:100vw;height:100vh;height:100dvh;display:flex;flex-direction:column;max-width:520px;margin:0 auto;background:#0b0f1a}
+#app{width:100vw;height:100vh;height:100dvh;display:flex;flex-direction:column;max-width:520px;margin:0 auto;background:#0b0f1a;position:relative}
 header{text-align:center;padding:22px 10px 14px;background:#0e1626;border-bottom:2px solid #1e2e4a;position:relative}
 header h1{margin:0;font-size:38px;letter-spacing:3px;font-weight:900}
 header h1 span{color:#00e676}
 header p{margin:4px 0 0;font-size:13px;opacity:.6;letter-spacing:2px}
 #centerArea{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:20px;gap:16px;overflow-y:auto}
+.mainBtn{width:100%;max-width:380px;border:2px solid #000;border-radius:22px;padding:22px 20px;font-weight:900;font-size:20px;cursor:pointer;box-shadow:0 6px 0 rgba(0,0,0,.5)}
+.mainBtn:active{transform:translateY(4px);box-shadow:0 2px 0 rgba(0,0,0,.5)}
+.green{background:#00e676;color:#000}
+.yellow{background:#ffd700;color:#000}
 .card{width:100%;max-width:380px;background:#16213a;border:2px solid #2a3a5a;border-radius:22px;padding:22px}
 .card h3{margin:0 0 6px;font-size:21px;text-align:center}
 .card p{margin:0 0 10px;text-align:center;font-size:13px;opacity:.6}
 input{width:100%;padding:16px;border-radius:14px;border:2px solid #333;background:#0b0f1a;color:#fff;font-size:17px;margin-top:12px;outline:none}
 input:focus{border-color:#00e676}
 .smallBtn{width:100%;border:2px solid #000;border-radius:16px;padding:16px;font-weight:900;font-size:18px;margin-top:14px;cursor:pointer}
-.green{background:#00e676;color:#000}
-.yellow{background:#ffd700;color:#000}
+.backLink{text-align:center;margin-top:12px;font-size:14px;opacity:.7;cursor:pointer;background:#0b0f1a;border:1px solid #333;padding:10px;border-radius:14px}
+.hidden{display:none!important}
+.tipBox{background:#0e2a1a;border:2px solid #00e676;border-radius:16px;padding:12px;text-align:center;font-size:13px;line-height:1.6}
+.tipBox b{color:#00e676}
+.exampleBox{background:#0b0f1a;border:1px dashed #00e676;border-radius:12px;padding:10px;text-align:center;font-size:13px;margin-top:10px;color:#ccc}
+.exampleBox b{color:#fff}
 #chatScreen{display:none;flex-direction:column;height:100%}
 #chatHeader{display:flex;align-items:center;gap:10px;padding:12px;background:#16213a;border-bottom:2px solid #2a3a5a}
 #chatHeader button{background:#fff;border:2px solid #ccc;border-radius:20px;padding:8px 14px;font-weight:900;cursor:pointer}
@@ -31,13 +39,23 @@ input:focus{border-color:#00e676}
 .msg small{display:block;font-size:11px;opacity:.7;margin-top:4px}
 .memberList{display:flex;flex-wrap:wrap;gap:6px;padding:8px 12px}
 .member{background:#0b0f1a;border:1px solid #333;padding:8px 12px;border-radius:20px;font-size:13px}
-#inputBar{display:flex;gap:8px;padding:10px;background:#16213a;align-items:center;border-top:2px solid #2a3a5a}
+#inputBar{display:flex;gap:8px;padding:10px;background:#16213a;align-items:center;border-top:2px solid #2a3a5a;position:relative}
 #inputBar input{margin:0;flex:1;border-radius:25px}
 .iconBtn{width:50px;height:50px;border-radius:50%;border:2px solid #000;font-size:22px;flex-shrink:0;cursor:pointer}
 .sendBtn{background:#00e676;color:#000}
 .pollBtn{background:#ffd700;color:#000}
-#adminBtn{position:absolute;left:10px;bottom:10px;background:#222;color:#ccc;border:2px solid #444;border-radius:20px;padding:10px 14px;font-size:13px;font-weight:900;z-index:999}
+.dragBtn{position:absolute;z-index:999;touch-action:none;cursor:grab;transition:box-shadow .2s, transform .2s}
+.dragBtn.dragging{cursor:grabbing;transform:scale(1.15);box-shadow:0 0 0 3px #00e676, 0 10px 30px rgba(0,230,118,.5)!important;z-index:2001}
+#adminBtn{left:10px;bottom:10px;background:#222;color:#ccc;border:2px solid #444;border-radius:20px;padding:12px 16px;font-size:13px;font-weight:900}
 #adminBtn.adminOn{background:#ff3b30;color:#fff}
+#langBtn{left:10px;bottom:62px;background:#16213a;color:#fff;border:2px solid #00e676;border-radius:20px;padding:12px 16px;font-size:13px;font-weight:900}
+#dragHint{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#00e676;color:#000;padding:14px 20px;border-radius:20px;font-weight:900;z-index:3000;display:none;text-align:center;font-size:15px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+#langPanel{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:2000;display:none;align-items:flex-end;justify-content:center}
+#langPanel.show{display:flex}
+#langBox{background:#16213a;width:100%;max-width:520px;max-height:80vh;overflow-y:auto;border-radius:25px 25px 0 0;padding:20px;padding-bottom:30px;border-top:3px solid #00e676}
+.langItem{display:flex;align-items:center;gap:12px;background:#0b0f1a;border:2px solid #333;padding:15px 16px;border-radius:16px;margin-top:10px;cursor:pointer;font-size:16px;font-weight:700}
+.langItem.active{border-color:#00e676;background:#0e2a1a}
+.langItem .flag{font-size:26px}
 #adminPanel{position:absolute;inset:0;background:#0b0f1a;z-index:100;display:none;flex-direction:column;overflow-y:auto}
 .adminCard{background:#16213a;border:2px solid #ff3b30;border-radius:16px;padding:15px;margin:10px;cursor:pointer}
 .adminCard.selected{background:#0e2a1a!important;border-color:#00e676!important;box-shadow:0 0 0 2px #00e676}
@@ -48,49 +66,62 @@ input:focus{border-color:#00e676}
 .pollOpt{background:#0b0f1a;border:2px solid #333;border-radius:12px;padding:10px 12px;margin-top:8px;cursor:pointer;font-weight:700;font-size:14px;position:relative;overflow:hidden}
 .pollOpt .fill{position:absolute;left:0;top:0;bottom:0;background:#00e676;opacity:.35}
 .pollOpt .txt{position:relative;display:flex;justify-content:space-between}
-.hidden{display:none!important}
 </style>
 </head>
 <body>
 <div id="app">
 <div id="home" style="display:flex;flex-direction:column;height:100%">
-<header><h1><span>CLANS</span></h1><p>Klan Adı Yok • Resim Yok • Sadece Şifre!</p><button id="adminKlanlarBtn" onclick="openAdminPanel()" style="display:none;position:absolute;top:12px;right:12px;background:#ff3b30;color:#fff;border:2px solid #ff6b60;border-radius:20px;padding:10px 14px;font-weight:900">👀 Klanları Gör</button></header>
+<header><h1><span>CLANS</span></h1><p data-t="subtitle">Herkes Çıkınca Şifre Boşalır!</p><button id="adminKlanlarBtn" onclick="openAdminPanel()" style="display:none;position:absolute;top:12px;right:12px;background:#ff3b30;color:#fff;border:2px solid #ff6b60;border-radius:20px;padding:10px 14px;font-weight:900">👀 <span data-t="viewClans">Klanları Gör</span></button></header>
 <div id="centerArea">
-<div class="card">
-<h3>🔐 Şifreyle Gir</h3>
-<p>Klan adı yok! Resim yok! Şifre = Klan!</p>
-<input id="myNameInput" placeholder="Senin Adın: Örn Amin">
-<input id="passInput" placeholder="Şifre: Örn 1234" type="password">
-<button class="smallBtn green" onclick="gir()">🚀 GİR / KLANI KUR</button>
-<p style="margin-top:12px">💡 Şifre boşsa yeni klan kurulur<br>Şifre doluysa o klana girersin!</p>
+<div id="menuBtns" style="width:100%;max-width:380px;display:flex;flex-direction:column;gap:16px">
+<button class="mainBtn green" onclick="showCreate()">➕ <span data-t="createClan">KLAN OLUŞTUR</span></button>
+<button class="mainBtn yellow" onclick="showAra()">🔍 <span data-t="findClan">KLAN ARA</span></button>
+<div class="tipBox">💡 <span data-t="tip">İsim aynı olabilir! Şifre farklı olsun!</span><br><b>✋ <span data-t="dragTip">Admin ve Dil tuşlarına 1 saniye basılı tut, taşı</span></b><br><span style="opacity:.8">İstediğin yere sürükle, bırak!</span></div>
 </div>
+
+<div id="createBox" class="card hidden"><h3>➕ <span data-t="createClanTitle">Klan Oluştur</span></h3><p data-t="createDesc">İsim aynı olabilir, şifre farklı olsun!</p>
+<input id="createMyName" data-ph="yourName" placeholder="Adın: Örn Kaan">
+<input id="createPass" data-ph="password" placeholder="Şifre: Örn 1234" type="password">
+<div class="exampleBox">📝 <span data-t="example">Örnek:</span> <b>Kaan</b> + <b>1234</b></div>
+<button class="smallBtn green" onclick="createClan()"><span data-t="createBtn">KUR ✅</span></button>
+<div class="backLink" onclick="backToMenu()">◀ <span data-t="back">Geri</span></div></div>
+
+<div id="araBox" class="card hidden"><h3>🔍 <span data-t="findClanTitle">Klan Ara</span></h3><p data-t="findDesc">İsim aynı olabilir, şifreyi doğru yaz yeter!</p>
+<input id="araMyName" data-ph="yourName" placeholder="Adın: Örn Kaan">
+<input id="araPass" data-ph="password" placeholder="Şifre: Örn 1234" type="password">
+<div class="exampleBox">📝 <span data-t="example">Örnek:</span> <b>Kaan</b> + <b>1234</b></div>
+<button class="smallBtn yellow" onclick="araGir()"><span data-t="searchBtn">GİR 🔍</span></button>
+<div class="backLink" onclick="backToMenu()">◀ <span data-t="back">Geri</span></div></div>
 </div>
 </div>
 
 <div id="chatScreen">
-<div id="chatHeader"><button onclick="backHome()">◀</button><div style="flex:1"><b id="chatTitle">Klan</b><br><span id="chatInfo" style="font-size:12px;opacity:.7"></span></div><button onclick="leaveClan()" style="background:#ff3b30;color:#fff;border-color:#7a120c">Çık</button></div>
+<div id="chatHeader"><button onclick="leaveClan()">◀ <span data-t="leave">Çık</span></button><div style="flex:1"><b id="chatTitle">Klan</b><br><span id="chatInfo" style="font-size:12px;opacity:.7"></span></div><button onclick="leaveClan()" style="background:#ff3b30;color:#fff;border-color:#7a120c"><span data-t="leave2">Çık</span></button></div>
 <div class="memberList" id="memberList"></div>
 <div id="messages"></div>
 <div id="inputBar">
 <button class="iconBtn pollBtn" onclick="togglePoll()">📊</button>
-<input id="msgInput" placeholder="Mesaj yaz..." onkeydown="if(event.key==='Enter') sendMsg()">
+<input id="msgInput" data-ph="writeMsg" placeholder="Mesaj yaz..." onkeydown="if(event.key==='Enter') sendMsg()">
 <button class="iconBtn sendBtn" onclick="sendMsg()">➤</button>
 <div id="pollPanel">
-<h3>📊 Anket Oluştur</h3>
-<input id="pollQ" placeholder="Sorun ne?">
-<input class="pollOptVal" placeholder="Şık 1 - Evet">
-<input class="pollOptVal" placeholder="Şık 2 - Hayır">
-<button class="smallBtn yellow" onclick="createPoll()">Anketi Oluştur</button>
-<button class="smallBtn" style="background:#fff;color:#000" onclick="togglePoll()">İptal</button>
+<h3>📊 <span data-t="pollTitle">Anket Oluştur</span></h3>
+<input id="pollQ" data-ph="pollQ" placeholder="Sorun ne?">
+<input class="pollOptVal" data-ph="opt1" placeholder="Şık 1 - Evet">
+<input class="pollOptVal" data-ph="opt2" placeholder="Şık 2 - Hayır">
+<button class="smallBtn yellow" onclick="createPoll()"><span data-t="pollCreate">Anketi Oluştur</span></button>
+<button class="smallBtn" style="background:#fff;color:#000" onclick="togglePoll()">✕ <span data-t="cancel">İptal</span></button>
 </div>
 </div>
 </div>
 
-<button id="adminBtn">⚙️ Admin</button>
+<button id="langBtn" class="dragBtn">🌐 TR</button>
+<button id="adminBtn" class="dragBtn">⚙️ <span data-t="admin">Admin</span></button>
+<div id="dragHint">✋ <span data-t="dragging">Taşıyorsun... Bırak!</span></div>
+<div id="langPanel" onclick="if(event.target===this) closeLang()"><div id="langBox"><div class="langItem" onclick="closeLang()" style="justify-content:center;background:#ff3b30;border-color:#ff3b30;color:#fff;margin-top:0">✕ <span data-t="close">Kapat</span></div><h3 style="text-align:center">🌐 <span data-t="chooseLang">Dil Seç</span></h3><p style="text-align:center;font-size:13px;opacity:.6"><span data-t="chooseLangSub">Seç, her şey çevrilsin!</span></p><div id="langList"></div></div></div>
 <div id="adminPanel">
-<header style="display:flex;justify-content:space-between;align-items:center;padding:16px;background:#ff3b30;color:#fff"><div><b>👀 Tüm Şifreler / Klanlar</b><br><span style="font-size:13px">1 sn basılı tut = Seç • Benden Gizle = Sadece sende gizlenir</span></div><button onclick="closeAdminPanel()" style="background:#fff;border:none;padding:10px 14px;border-radius:20px;font-weight:900">✕ Kapat</button></header>
-<div id="adminSelectBar"><b id="adminSelectText" style="flex:1">1 seçildi</b><button onclick="hideSelectedClans()" style="background:#000;color:#fff">🙈 Benden Gizle</button><button onclick="cancelAdminSelection()" style="background:#fff;color:#000">✕ İptal</button></div>
-<div style="padding:10px;text-align:center"><b>Toplam Klan: <span id="totalClan">0</span></b> <span id="hiddenCount"></span><br><button onclick="showHiddenClans()" style="margin-top:8px;background:#333;color:#fff;border:1px solid #666;border-radius:20px;padding:8px 14px;font-weight:900">👀 Gizli Klanları Geri Göster</button></div>
+<header style="display:flex;justify-content:space-between;align-items:center;padding:16px;background:#ff3b30;color:#fff"><div><b>👀 <span data-t="allClans">Tüm Klanlar</span></b><br><span style="font-size:13px" data-t="adminHint">1 sn basılı tut = Seç • Benden Gizle = Sadece sende gizlenir</span></div><button onclick="closeAdminPanel()" style="background:#fff;border:none;padding:10px 14px;border-radius:20px;font-weight:900">✕ <span data-t="close">Kapat</span></button></header>
+<div id="adminSelectBar"><b id="adminSelectText" style="flex:1">1 seçildi</b><button onclick="hideSelectedClans()" style="background:#000;color:#fff">🙈 <span data-t="hideFromMe">Benden Gizle</span></button><button onclick="cancelAdminSelection()" style="background:#fff;color:#000">✕ <span data-t="cancel">İptal</span></button></div>
+<div style="padding:10px;text-align:center"><b><span data-t="totalClans">Toplam Klan</span>: <span id="totalClan">0</span></b> <span id="hiddenCount"></span><br><button onclick="showHiddenClans()" style="margin-top:8px;background:#333;color:#fff;border:1px solid #666;border-radius:20px;padding:8px 14px;font-weight:900">👀 <span data-t="showHidden">Gizli Klanları Geri Göster</span></button></div>
 <div id="adminList"></div>
 </div>
 </div>
@@ -110,30 +141,117 @@ async function getCloud(){
 async function saveCloud(){ localStorage.setItem('clans_v3', JSON.stringify(clans)); if(!BIN_ID) return; try{ await fetch(API + '/' + BIN_ID, {method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify({clans: clans})}); }catch(e){} }
 async function refreshClans(){ let d = await getCloud(); clans = d.clans || []; }
 let clans=[];
-let myName='', currentClanId=null, isAdmin=false, ADMIN_PASS="tYgH12";
+let myName='', myMemberId='', currentClanId=null, isAdmin=false, ADMIN_PASS="tYgH12";
 let hiddenForAdmin = JSON.parse(localStorage.getItem('hidden_clans_admin_v3')||'[]');
 let adminSelected = new Set(), adminSelectionMode=false;
-async function init(){ await refreshClans(); }
-init();
+let lang = localStorage.getItem('clans_lang')||'tr';
+let LANGS=[{code:'tr',flag:'🇹🇷',name:'Türkçe'},{code:'en',flag:'🇬🇧',name:'English'},{code:'az',flag:'🇦🇿',name:'Azərbaycanca'},{code:'ru',flag:'🇷🇺',name:'Русский'},{code:'es',flag:'🇪🇸',name:'Español'},{code:'fr',flag:'🇫🇷',name:'Français'},{code:'de',flag:'🇩🇪',name:'Deutsch'},{code:'it',flag:'🇮🇹',name:'Italiano'},{code:'pt',flag:'🇵🇹',name:'Português'},{code:'ar',flag:'🇸🇦',name:'العربية'},{code:'hi',flag:'🇮🇳',name:'हिन्दी'},{code:'ja',flag:'🇯🇵',name:'日本語'},{code:'ko',flag:'🇰🇷',name:'한국어'},{code:'zh',flag:'🇨🇳',name:'中文'},{code:'nl',flag:'🇳🇱',name:'Nederlands'},{code:'sv',flag:'🇸🇪',name:'Svenska'},{code:'uk',flag:'🇺🇦',name:'Українська'},{code:'pl',flag:'🇵🇱',name:'Polski'}];
+let T={
+tr:{subtitle:"Herkes Çıkınca Şifre Boşalır!",viewClans:"Klanları Gör",createClan:"KLAN OLUŞTUR",findClan:"KLAN ARA",createClanTitle:"Klan Oluştur",createDesc:"İsim aynı olabilir, şifre farklı olsun!",createBtn:"KUR ✅",back:"Geri",findClanTitle:"Klan Ara",findDesc:"İsim aynı olabilir, şifreyi doğru yaz yeter!",searchBtn:"GİR 🔍",leave:"Çık",leave2:"Çık",admin:"Admin",allClans:"Tüm Klanlar",close:"Kapat",totalClans:"Toplam Klan",chooseLang:"Dil Seç",chooseLangSub:"Seç, her şey çevrilsin!",tip:"İsim aynı olabilir! Şifre farklı olsun!",dragTip:"Admin ve Dil tuşlarına 1 saniye basılı tut, taşı",dragging:"Taşıyorsun... Bırak!",pollTitle:"Anket Oluştur",pollCreate:"Anketi Oluştur",cancel:"İptal",adminHint:"1 sn basılı tut = Seç • Benden Gizle = Sadece sende gizlenir",hideFromMe:"Benden Gizle",showHidden:"Gizli Klanları Geri Göster",yourName:"Adın: Örn Kaan",password:"Şifre: Örn 1234",writeMsg:"Mesaj yaz...",pollQ:"Sorun ne?",opt1:"Şık 1 - Evet",opt2:"Şık 2 - Hayır",created:"bu şifreyle yeni klan kurdu! 🎉 Şifre:",joined:"klana katıldı! 👋",people:"kişi",totalVotes:"Toplam",votes:"oy",alreadyVoted:"Zaten oy verdin!",writeNamePass:"Adını + Şifreni yaz!",passTaken:"Bu şifre dolu! Başka şifre dene!",noPass:"Böyle bir şifre yok! Klan silinmiş olabilir!",clanFull:"Klan doldu!",example:"Örnek:"},
+en:{subtitle:"When Everyone Leaves, Password Frees!",viewClans:"View Clans",createClan:"CREATE CLAN",findClan:"FIND CLAN",createClanTitle:"Create Clan",createDesc:"Name can be same, password must be different!",createBtn:"CREATE ✅",back:"Back",findClanTitle:"Find Clan",findDesc:"Name can be same, just write password correctly!",searchBtn:"JOIN 🔍",leave:"Leave",leave2:"Leave",admin:"Admin",allClans:"All Clans",close:"Close",totalClans:"Total Clans",chooseLang:"Choose Language",chooseLangSub:"Choose, everything will translate!",tip:"Name can be same! Password must be different!",dragTip:"Hold Admin and Language buttons for 1 second, drag",dragging:"Dragging... Drop!",pollTitle:"Create Poll",pollCreate:"Create Poll",cancel:"Cancel",adminHint:"Hold 1 sec = Select • Hide = Only hidden from you",hideFromMe:"Hide From Me",showHidden:"Show Hidden Clans",yourName:"Your Name: e.g. Kaan",password:"Password: e.g. 1234",writeMsg:"Write message...",pollQ:"What is the question?",opt1:"Option 1 - Yes",opt2:"Option 2 - No",created:"created a new clan with this password! 🎉 Password:",joined:"joined the clan! 👋",people:"people",totalVotes:"Total",votes:"votes",alreadyVoted:"You already voted!",writeNamePass:"Write your name + password!",passTaken:"This password is taken! Try another!",noPass:"No such password! Clan may be deleted!",clanFull:"Clan is full!",example:"Example:"},
+az:{subtitle:"Hamı Çıxanda Şifrə Boşalır!",viewClans:"Klanlara Bax",createClan:"KLAN YARAT",findClan:"KLAN TAP",createClanTitle:"Klan Yarat",createDesc:"Ad eyni ola bilər, şifrə fərqli olsun!",createBtn:"YARAT ✅",back:"Geri",findClanTitle:"Klan Tap",findDesc:"Ad eyni ola bilər, şifrəni düz yaz!",searchBtn:"GİR 🔍",leave:"Çıx",leave2:"Çıx",admin:"Admin",allClans:"Bütün Klanlar",close:"Bağla",totalClans:"Ümumi Klan",chooseLang:"Dil Seç",chooseLangSub:"Seç, hər şey çevriləcək!",tip:"Ad eyni ola bilər! Şifrə fərqli olsun!",dragTip:"Admin və Dil düymələrini 1 saniyə basılı tut, daşı",dragging:"Daşıyırsan... Burax!",pollTitle:"Anket Yarat",pollCreate:"Anket Yarat",cancel:"Ləğv et",adminHint:"1 saniyə bas = Seç • Gizlə = Yalnız səndən gizlənir",hideFromMe:"Məndən Gizlə",showHidden:"Gizli Klanları Göstər",yourName:"Adın: Məs Kaan",password:"Şifrə: Məs 1234",writeMsg:"Mesaj yaz...",pollQ:"Sualın nədir?",opt1:"Variant 1 - Bəli",opt2:"Variant 2 - Xeyr",created:"bu şifrə ilə yeni klan yaratdı! 🎉 Şifrə:",joined:"klana qatıldı! 👋",people:"nəfər",totalVotes:"Ümumi",votes:"səs",alreadyVoted:"Artıq səs vermisən!",writeNamePass:"Adını + Şifrəni yaz!",passTaken:"Bu şifrə doludur! Başqa şifrə dene!",noPass:"Belə şifrə yoxdur! Klan silinmiş ola bilər!",clanFull:"Klan doludur!",example:"Nümunə:"},
+ru:{subtitle:"Когда все выйдут, пароль освободится!",viewClans:"Посмотреть Кланы",createClan:"СОЗДАТЬ КЛАН",findClan:"НАЙТИ КЛАН",createClanTitle:"Создать Клан",createDesc:"Имя может быть одинаковым, пароль должен отличаться!",createBtn:"СОЗДАТЬ ✅",back:"Назад",findClanTitle:"Найти Клан",findDesc:"Имя может быть одинаковым, просто напиши пароль правильно!",searchBtn:"ВОЙТИ 🔍",leave:"Выйти",leave2:"Выйти",admin:"Админ",allClans:"Все Кланы",close:"Закрыть",totalClans:"Всего Кланов",chooseLang:"Выбрать Язык",chooseLangSub:"Выбери, всё переведётся!",tip:"Имя может быть одинаковым! Пароль должен отличаться!",dragTip:"Держи кнопки Админ и Язык 1 сек, перетаскивай",dragging:"Перетаскиваешь... Отпусти!",pollTitle:"Создать Опрос",pollCreate:"Создать Опрос",cancel:"Отмена",adminHint:"Держи 1 сек = Выбрать • Скрыть = Скрыто только у тебя",hideFromMe:"Скрыть от меня",showHidden:"Показать скрытые кланы",yourName:"Твоё имя: напр. Каан",password:"Пароль: напр. 1234",writeMsg:"Написать сообщение...",pollQ:"Какой вопрос?",opt1:"Вариант 1 - Да",opt2:"Вариант 2 - Нет",created:"создал новый клан с этим паролем! 🎉 Пароль:",joined:"вошёл в клан! 👋",people:"человек",totalVotes:"Всего",votes:"голосов",alreadyVoted:"Ты уже голосовал!",writeNamePass:"Напиши имя + пароль!",passTaken:"Этот пароль занят! Попробуй другой!",noPass:"Такого пароля нет! Клан мог быть удалён!",clanFull:"Клан полон!",example:"Пример:"}
+};
+['es','fr','de','it','pt','ar','hi','ja','ko','zh','nl','sv','uk','pl'].forEach(c=>{ if(!T[c]) T[c]=T.en; });
+function t(k){ return (T[lang]&&T[lang][k])||T['tr'][k]||k; }
+function applyLang(){
+  document.querySelectorAll('[data-t]').forEach(el=>{ let k=el.getAttribute('data-t'); el.textContent=t(k); });
+  document.querySelectorAll('[data-ph]').forEach(el=>{ let k=el.getAttribute('data-ph'); el.placeholder=t(k); });
+  document.getElementById('langBtn').textContent='🌐 '+lang.toUpperCase();
+  localStorage.setItem('clans_lang',lang);
+  renderLangList();
+  if(currentClanId) renderAll();
+}
+function openLang(){ document.getElementById('langPanel').classList.add('show'); renderLangList(); }
+function closeLang(){ document.getElementById('langPanel').classList.remove('show'); }
+function renderLangList(){ document.getElementById('langList').innerHTML = LANGS.map(l=>`<div class="langItem ${l.code===lang?'active':''}" onclick="setLang('${l.code}')"><span class="flag">${l.flag}</span> ${l.name} <span style="opacity:.5">(${l.code.toUpperCase()})</span> ${l.code===lang?'✓':''}</div>`).join(''); }
+function setLang(c){ lang=c; applyLang(); closeLang(); }
 
-async function gir(){
-  let name = document.getElementById('myNameInput').value.trim();
-  let pass = document.getElementById('passInput').value.trim();
-  if(!name || !pass){ alert('Lütfen Adını + Şifreni yaz!'); return; }
-  await refreshClans();
-  let c = clans.find(x=>x.pass===pass);
-  if(!c){
-    c = {id:Date.now(), pass:pass, members:[name], messages:[{user:'Sistem', text:name+' bu şifreyle yeni klan kurdu! 🎉', time:'Şimdi'}]};
-    clans.push(c);
-    await saveCloud();
-    alert('🎉 Yeni klan kuruldu! Şifren: ' + pass + ' - Bu şifreyi arkadaşına söyle, o da girsin!');
-  } else {
-    if(c.members.length >= 100000){ alert('Klan doldu! 100.000 kişi var!'); return; }
-    if(!c.members.includes(name)) c.members.push(name);
-    c.messages.push({user:'Sistem', text:name+' klana katıldı! 👋', time:'Şimdi'});
-    await saveCloud();
+// ===== SÜRÜKLE BIRAK - 1 SN BASILI TUT, TAŞI =====
+function makeDraggable(btnId, storageKey, defaultPos){
+  let btn=document.getElementById(btnId);
+  let saved=JSON.parse(localStorage.getItem(storageKey)||'null');
+  if(saved){ btn.style.left=saved.left+'px'; btn.style.top=saved.top+'px'; btn.style.bottom='auto'; btn.style.right='auto'; }
+  else if(defaultPos){ btn.style.left=defaultPos.left; btn.style.bottom=defaultPos.bottom; }
+  let pressTimer=null, dragging=false, startX=0, startY=0, btnX=0, btnY=0;
+  function startPress(e){
+    let pt=e.touches?e.touches[0]:e;
+    startX=pt.clientX; startY=pt.clientY;
+    pressTimer=setTimeout(()=>{
+      dragging=true; btn.classList.add('dragging');
+      document.getElementById('dragHint').style.display='block';
+      if(navigator.vibrate) navigator.vibrate(100);
+      let r=btn.getBoundingClientRect();
+      btnX=r.left; btnY=r.top;
+      btn.style.left=btnX+'px'; btn.style.top=btnY+'px'; btn.style.bottom='auto'; btn.style.right='auto';
+    },1000);
   }
+  function moveDrag(e){
+    if(!dragging) return;
+    e.preventDefault();
+    let pt=e.touches?e.touches[0]:e;
+    let nx=pt.clientX-startX+btnX, ny=pt.clientY-startY+btnY;
+    nx=Math.max(0,Math.min(window.innerWidth-btn.offsetWidth,nx));
+    ny=Math.max(0,Math.min(window.innerHeight-btn.offsetHeight,ny));
+    btn.style.left=nx+'px'; btn.style.top=ny+'px';
+  }
+  function endDrag(e){
+    if(pressTimer) clearTimeout(pressTimer);
+    if(dragging){
+      dragging=false; btn.classList.remove('dragging');
+      document.getElementById('dragHint').style.display='none';
+      localStorage.setItem(storageKey, JSON.stringify({left:parseInt(btn.style.left), top:parseInt(btn.style.top)}));
+      return true;
+    }
+    return false;
+  }
+  btn.addEventListener('touchstart', startPress, {passive:true});
+  btn.addEventListener('touchmove', moveDrag, {passive:false});
+  btn.addEventListener('touchend', (e)=>{ if(endDrag(e)) e.preventDefault(); });
+  btn.addEventListener('mousedown', startPress);
+  btn.addEventListener('mousemove', moveDrag);
+  btn.addEventListener('mouseup', endDrag);
+  btn.addEventListener('click', (e)=>{
+    if(btn.dataset.wasDragging==='1'){ e.stopPropagation(); e.preventDefault(); btn.dataset.wasDragging='0'; }
+  });
+  // Normal tıklamayı sürüklemeden ayır
+  let origClick=null;
+  btn.addEventListener('touchend', ()=>{});
+}
+async function init(){ await refreshClans(); applyLang(); makeDraggable('adminBtn','pos_adminBtn',{left:'10px',bottom:'10px'}); makeDraggable('langBtn','pos_langBtn',{left:'10px',bottom:'62px'}); }
+init();
+function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function backToMenu(){ document.getElementById('createBox').classList.add('hidden'); document.getElementById('araBox').classList.add('hidden'); document.getElementById('menuBtns').classList.remove('hidden'); showHomeButtons(); }
+function showCreate(){ document.getElementById('menuBtns').classList.add('hidden'); document.getElementById('araBox').classList.add('hidden'); document.getElementById('createBox').classList.remove('hidden'); }
+function showAra(){ document.getElementById('menuBtns').classList.add('hidden'); document.getElementById('createBox').classList.add('hidden'); document.getElementById('araBox').classList.remove('hidden'); }
+function showHomeButtons(){ document.getElementById('adminBtn').style.display='block'; document.getElementById('langBtn').style.display='block'; if(isAdmin) document.getElementById('adminKlanlarBtn').style.display='block'; }
+function hideHomeButtons(){ document.getElementById('adminBtn').style.display='none'; document.getElementById('langBtn').style.display='none'; document.getElementById('adminKlanlarBtn').style.display='none'; }
+async function createClan(){
+  let name = document.getElementById('createMyName').value.trim();
+  let pass = document.getElementById('createPass').value.trim();
+  if(!name || !pass){ alert(t('writeNamePass')); return; }
+  await refreshClans();
+  let c = clans.find(x=>String(x.pass)===String(pass));
+  if(c){ alert(t('passTaken')); return; }
+  myMemberId = 'u_' + Date.now() + '_' + Math.floor(Math.random()*1000000);
   myName = name;
+  c = {id:Date.now(), pass:pass, members:[{id:myMemberId, name:name}], messages:[{user:'Sistem', uid:'sys', sys:'created', name:name, pass:pass, time:'Şimdi'}]};
+  clans.push(c); await saveCloud();
+  openChat(c.id);
+}
+async function araGir(){
+  let name = document.getElementById('araMyName').value.trim();
+  let pass = document.getElementById('araPass').value.trim();
+  if(!name || !pass){ alert(t('writeNamePass')); return; }
+  await refreshClans();
+  let c = clans.find(x=>String(x.pass)===String(pass));
+  if(!c){ alert(t('noPass')); return; }
+  if(c.members.length >= 100000){ alert(t('clanFull')); return; }
+  myMemberId = 'u_' + Date.now() + '_' + Math.floor(Math.random()*1000000);
+  myName = name;
+  c.members.push({id:myMemberId, name:name});
+  c.messages.push({user:'Sistem', uid:'sys', sys:'joined', name:name, time:'Şimdi'});
+  await saveCloud();
   openChat(c.id);
 }
 function openChat(id){
@@ -141,47 +259,58 @@ function openChat(id){
   let c = clans.find(x=>x.id===id);
   document.getElementById('home').style.display='none';
   document.getElementById('chatScreen').style.display='flex';
-  document.getElementById('chatTitle').textContent = '🔐 Şifre: ' + c.pass + ' Klanı';
+  hideHomeButtons();
+  document.getElementById('chatTitle').textContent = '🔐 '+t('password')+' : ' + c.pass + ' ' + t('clan');
   renderAll();
+}
+function sysText(m){
+  if(m.sys==='created') return escapeHtml(m.name)+' '+t('created')+' '+escapeHtml(m.pass);
+  if(m.sys==='joined') return escapeHtml(m.name)+' '+t('joined');
+  return escapeHtml(m.text||'');
 }
 function renderAll(){
   let c = clans.find(x=>x.id===currentClanId); if(!c) return;
-  document.getElementById('chatInfo').textContent = c.members.length + ' / 100000 kişi';
-  document.getElementById('memberList').innerHTML = c.members.map(m=>`<span class="member">👤 ${escapeHtml(m)}</span>`).join('');
+  document.getElementById('chatInfo').textContent = c.members.length + ' / 100000 ' + t('people');
+  document.getElementById('memberList').innerHTML = c.members.map(m=>{
+    let n = typeof m==='string'? m : m.name;
+    return `<span class="member">👤 ${escapeHtml(n)}</span>`;
+  }).join('');
   document.getElementById('messages').innerHTML = c.messages.map(m=>{
-    let isMe = m.user===myName;
-    let content = escapeHtml(m.text||'');
+    let isMe = m.uid===myMemberId;
+    let content = m.sys ? sysText(m) : escapeHtml(m.text||'');
     if(m.poll){
       let total = Object.keys(m.poll.votes||{}).length;
       let opts = m.poll.options.map((o,oi)=>{
         let cnt = Object.values(m.poll.votes||{}).filter(v=>v===oi).length;
         let pct = total?Math.round(cnt/total*100):0;
-        return `<div class="pollOpt" onclick="votePoll(${c.messages.indexOf(m)},${oi})"><div class="fill" style="width:${pct}%"></div><div class="txt"><span>${escapeHtml(o)}</span><span>${cnt} oy • %${pct}</span></div></div>`;
+        return `<div class="pollOpt" onclick="votePoll(${c.messages.indexOf(m)},${oi})"><div class="fill" style="width:${pct}%"></div><div class="txt"><span>${escapeHtml(o)}</span><span>${cnt} ${t('votes')} • %${pct}</span></div></div>`;
       }).join('');
-      content = `<div><b>📊 ${escapeHtml(m.poll.q)}</b>${opts}<div style="font-size:12px;opacity:.7;margin-top:6px">Toplam ${total} oy</div></div>`;
+      content = `<div><b>📊 ${escapeHtml(m.poll.q)}</b>${opts}<div style="font-size:12px;opacity:.7;margin-top:6px">${t('totalVotes')} ${total} ${t('votes')}</div></div>`;
     }
-    return `<div class="msg ${isMe?'me':'other'}">${m.user!==myName?`<b style="font-size:12px">${escapeHtml(m.user)}</b><br>`:''}${content}<small>${m.time}</small></div>`;
+    return `<div class="msg ${isMe?'me':'other'}">${!isMe?`<b style="font-size:12px">${escapeHtml(m.user)}</b><br>`:''}${content}<small>${m.time}</small></div>`;
   }).join('');
   let b = document.getElementById('messages'); b.scrollTop = b.scrollHeight;
 }
-function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function backHome(){ document.getElementById('chatScreen').style.display='none'; document.getElementById('home').style.display='flex'; }
+function backHome(){ document.getElementById('chatScreen').style.display='none'; document.getElementById('home').style.display='flex'; backToMenu(); }
 async function sendMsg(){
   let inp = document.getElementById('msgInput'), txt = inp.value.trim(); if(!txt) return;
   let c = clans.find(x=>x.id===currentClanId);
-  c.messages.push({user:myName, text:txt, time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})});
+  c.messages.push({user:myName, uid:myMemberId, text:txt, time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})});
   await saveCloud(); inp.value=''; renderAll();
 }
 async function leaveClan(){
-  if(!confirm('Çıkmak istiyor musun? Son kişiysen klan SİLİNECEK!')) return;
   await refreshClans();
   let c = clans.find(x=>x.id===currentClanId);
   if(c && !isAdmin){
-    c.members = c.members.filter(m=>m!==myName);
+    let before = c.members.length;
+    c.members = c.members.filter(m=> (typeof m==='string'? false : m.id!==myMemberId));
+    if(c.members.length===before && c.members.length>0){
+      let idx = c.members.findIndex(m=> (typeof m==='string'? m===myName : m.name===myName));
+      if(idx!==-1) c.members.splice(idx,1);
+    }
     if(c.members.length===0){
       clans = clans.filter(x=>x.id!==currentClanId);
       await saveCloud();
-      alert('Sen son kişiydin! Klan tamamen silindi! 🗑️ Artık eski şifreyle kimse giremez!');
       backHome(); return;
     }
     await saveCloud();
@@ -192,24 +321,27 @@ function togglePoll(){ let p=document.getElementById('pollPanel'); p.classList.t
 async function createPoll(){
   let q=document.getElementById('pollQ').value.trim();
   let opts=[...document.querySelectorAll('.pollOptVal')].map(i=>i.value.trim()).filter(Boolean);
-  if(!q){ alert('Soruyu yaz!'); return; }
-  if(opts.length<2){ alert('En az 2 şık yaz!'); return; }
+  if(!q){ alert(t('pollQ')); return; }
+  if(opts.length<2){ alert('En az 2 şık!'); return; }
   let c=clans.find(x=>x.id===currentClanId);
-  c.messages.push({user:myName, text:'', poll:{q:q, options:opts, votes:{}}, time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})});
+  c.messages.push({user:myName, uid:myMemberId, text:'', poll:{q:q, options:opts, votes:{}}, time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})});
   await saveCloud(); document.getElementById('pollQ').value=''; document.querySelectorAll('.pollOptVal').forEach(i=>i.value=''); togglePoll(); renderAll();
 }
 async function votePoll(msgIdx, optIdx){
   let c=clans.find(x=>x.id===currentClanId); let m=c.messages[msgIdx];
-  if(!m||!m.poll) return; if(m.poll.votes[myName]!==undefined){ alert('Zaten oy verdin! ✅'); return; }
-  m.poll.votes[myName]=optIdx; await saveCloud(); renderAll();
+  if(!m||!m.poll) return; if(m.poll.votes[myMemberId]!==undefined){ alert(t('alreadyVoted')); return; }
+  m.poll.votes[myMemberId]=optIdx; await saveCloud(); renderAll();
 }
-function adminLogin(){ if(isAdmin){ openAdminPanel(); return; } let p=prompt('Admin Şifresini Gir:'); if(p===null) return; if(p===ADMIN_PASS){ isAdmin=true; document.getElementById('adminBtn').textContent='👑 Admin (On)'; document.getElementById('adminBtn').classList.add('adminOn'); document.getElementById('adminKlanlarBtn').style.display='block'; alert('Şifre doğru! 👑'); } else alert('Şifre yanlış!'); }
+function adminLogin(){ if(isAdmin){ openAdminPanel(); return; } let p=prompt(t('adminPassPrompt')||'Admin:'); if(p===null) return; if(p===ADMIN_PASS){ isAdmin=true; document.getElementById('adminBtn').textContent='👑 Admin (On)'; document.getElementById('adminBtn').classList.add('adminOn'); document.getElementById('adminKlanlarBtn').style.display='block'; alert('👑'); } else alert(t('wrongPass')); }
 async function openAdminPanel(){ if(!isAdmin){ adminLogin(); return; } await refreshClans(); cancelAdminSelection(); document.getElementById('adminPanel').style.display='flex'; renderAdminList(); }
 function renderAdminList(){
   let visible = clans.filter(c=>!hiddenForAdmin.includes(c.id));
   document.getElementById('totalClan').textContent = visible.length + ' / ' + clans.length;
-  document.getElementById('hiddenCount').textContent = hiddenForAdmin.length ? `• 🙈 Sende gizli: ${hiddenForAdmin.length}` : '';
-  document.getElementById('adminList').innerHTML = visible.map(c=>`<div class="adminCard ${adminSelected.has(c.id)?'selected':''}" data-id="${c.id}" onclick="adminCardClick(${c.id})"><b>🔐 Şifre: ${escapeHtml(c.pass)} ${adminSelected.has(c.id)?'✅':''}</b><p>👥 ${c.members.join(', ')} • 💬 ${c.messages.length} mesaj • ${c.members.length}/100000</p><p style="color:#00e676">${adminSelectionMode?'👆 Seçmek için tıkla':'👉 Girmek için tıkla - Gizli girersin'}</p><p style="color:#888;font-size:12px">1 sn basılı tut = Seçim modu</p></div>`).join('') || '<p style="text-align:center;opacity:.6;padding:20px">Hiç klan yok 🙈</p>';
+  document.getElementById('hiddenCount').textContent = hiddenForAdmin.length ? `• 🙈 ${hiddenForAdmin.length}` : '';
+  document.getElementById('adminList').innerHTML = visible.map(c=>{
+    let names = c.members.map(m=> typeof m==='string'? m : m.name).join(', ');
+    return `<div class="adminCard ${adminSelected.has(c.id)?'selected':''}" data-id="${c.id}" onclick="adminCardClick(${c.id})"><b>🔐 ${t('password')}: ${escapeHtml(c.pass)} ${adminSelected.has(c.id)?'✅':''}</b><p>👥 ${names} • 💬 ${c.messages.length} ${t('messages')||'mesaj'} • ${c.members.length}/100000</p><p style="color:#00e676">${adminSelectionMode?t('tapToSelect')||'Seç':t('tapToEnter')||'Gir'}</p><p style="color:#888;font-size:12px">1 sn basılı tut = Seçim modu</p></div>`;
+  }).join('') || '<p style="text-align:center;opacity:.6;padding:20px">Hiç klan yok 🙈</p>';
   attachAdminLongPress(); updateAdminSelectBar();
 }
 function attachAdminLongPress(){
@@ -225,13 +357,14 @@ function attachAdminLongPress(){
 function enterAdminSelection(id){ adminSelectionMode=true; toggleAdminSelect(id); }
 function adminCardClick(id){ if(adminSelectionMode){ toggleAdminSelect(id); return; } adminViewClan(id); }
 function toggleAdminSelect(id){ if(adminSelected.has(id)) adminSelected.delete(id); else adminSelected.add(id); if(adminSelected.size===0) adminSelectionMode=false; renderAdminList(); }
-function updateAdminSelectBar(){ let bar=document.getElementById('adminSelectBar'); if(adminSelectionMode && adminSelected.size>0){ bar.style.display='flex'; document.getElementById('adminSelectText').textContent = adminSelected.size + ' klan seçildi ✅'; } else bar.style.display='none'; }
+function updateAdminSelectBar(){ let bar=document.getElementById('adminSelectBar'); if(adminSelectionMode && adminSelected.size>0){ bar.style.display='flex'; document.getElementById('adminSelectText').textContent = adminSelected.size + ' seçildi ✅'; } else bar.style.display='none'; }
 function cancelAdminSelection(){ adminSelected.clear(); adminSelectionMode=false; updateAdminSelectBar(); if(document.getElementById('adminPanel').style.display==='flex') renderAdminList(); }
-function hideSelectedClans(){ if(adminSelected.size===0) return; if(!confirm(adminSelected.size + ' klanı sadece SENDEN gizleyeyim mi? Klanlar silinmeyecek, insanlar konuşmaya devam edecek! 🙈')) return; adminSelected.forEach(id=>{ if(!hiddenForAdmin.includes(id)) hiddenForAdmin.push(id); }); localStorage.setItem('hidden_clans_admin_v3', JSON.stringify(hiddenForAdmin)); alert('Tamam! ' + adminSelected.size + ' klan senden gizlendi 🙈 Ama klanlar hala yaşıyor!'); cancelAdminSelection(); }
-function showHiddenClans(){ if(hiddenForAdmin.length===0){ alert('Gizli klan yok!'); return; } hiddenForAdmin=[]; localStorage.setItem('hidden_clans_admin_v3', JSON.stringify(hiddenForAdmin)); alert('Gizli klanların geri geldi! 👀'); cancelAdminSelection(); }
+function hideSelectedClans(){ if(adminSelected.size===0) return; if(!confirm(adminSelected.size + ' klanı gizleyeyim mi?')) return; adminSelected.forEach(id=>{ if(!hiddenForAdmin.includes(id)) hiddenForAdmin.push(id); }); localStorage.setItem('hidden_clans_admin_v3', JSON.stringify(hiddenForAdmin)); cancelAdminSelection(); }
+function showHiddenClans(){ if(hiddenForAdmin.length===0){ alert('Gizli klan yok!'); return; } hiddenForAdmin=[]; localStorage.setItem('hidden_clans_admin_v3', JSON.stringify(hiddenForAdmin)); cancelAdminSelection(); }
 function closeAdminPanel(){ document.getElementById('adminPanel').style.display='none'; cancelAdminSelection(); if(isAdmin) document.getElementById('adminKlanlarBtn').style.display='block'; }
-function adminViewClan(id){ closeAdminPanel(); let c=clans.find(x=>x.id===id); currentClanId=id; myName='👻 Admin'; document.getElementById('home').style.display='none'; document.getElementById('chatScreen').style.display='flex'; document.getElementById('chatTitle').textContent='🔐 Şifre: '+c.pass+' [GİZLİ 👻]'; renderAll(); }
-document.getElementById('adminBtn').addEventListener('click', ()=>adminLogin());
+function adminViewClan(id){ closeAdminPanel(); let c=clans.find(x=>x.id===id); currentClanId=id; myName='👻 Admin'; myMemberId='admin_'+Date.now(); document.getElementById('home').style.display='none'; document.getElementById('chatScreen').style.display='flex'; hideHomeButtons(); document.getElementById('chatTitle').textContent='🔐 '+t('password')+': '+c.pass+' ['+t('secret')+']'; renderAll(); }
+document.getElementById('adminBtn').addEventListener('click', ()=>{ if(!document.getElementById('adminBtn').classList.contains('dragging')) adminLogin(); });
+document.getElementById('langBtn').addEventListener('click', ()=>{ if(!document.getElementById('langBtn').classList.contains('dragging')) openLang(); });
 </script>
 </body>
   </html>
