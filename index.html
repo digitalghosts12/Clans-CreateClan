@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>manihaber</title>
 <style>
-    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   body { 
     background: linear-gradient(135deg,#ffd6f5,#d6c8ff,#b8f0ff,#fff9b8,#ffc8dd);
     background-size:400% 400%;
@@ -120,21 +120,22 @@
 <div id="aktif-kutu"><span class="aktif-nokta"></span><span id="aktif-sayi">1</span> aktif 💖</div>
 
 <script>
-  let mesajlar = JSON.parse(localStorage.getItem('dg_mesajlar') || '[]');
+  // MANIHABER ÖZEL KASA - Dijital Ghost ile karışmaz!
+  let mesajlar = JSON.parse(localStorage.getItem('mh_mesajlar') || '[]');
   const SIFRE = "bNbN80";
   let yoneticiMi = false;
   let seciliIndexler = new Set();
   let basiliTimer = null;
-  let seciliDil = localStorage.getItem('dg_dil') || 'tr';
+  let seciliDil = localStorage.getItem('mh_dil') || 'tr';
   let ceviriCache = {};
 
-  let siteSilindiMi = localStorage.getItem('dg_silindi') === 'evet';
+  let siteSilindiMi = localStorage.getItem('mh_silindi') === 'evet';
   if(siteSilindiMi){
     document.body.innerHTML = "<h1 style='color:red; margin-top:100px;'>manihaber Silindi</h1><p>Bu site yönetici tarafından silindi.</p>";
   }
   if(mesajlar.length === 0 && !siteSilindiMi){
     mesajlar = [{ tarih: "7 / 11 / 2026 - 14:00", yazi: "selam" }];
-    localStorage.setItem('dg_mesajlar', JSON.stringify(mesajlar));
+    localStorage.setItem('mh_mesajlar', JSON.stringify(mesajlar));
   }
 
   async function cevir(yazi, hedefDil){
@@ -189,7 +190,7 @@
 
   function diliDegistir(dil){
     seciliDil = dil;
-    localStorage.setItem('dg_dil', dil);
+    localStorage.setItem('mh_dil', dil);
     document.querySelectorAll('.dilSec').forEach(b => b.classList.toggle('aktif', b.dataset.dil === dil));
     arayuzuUygula(dil);
     dilPaneliniKapat();
@@ -280,7 +281,7 @@
     let s = new Date();
     let tarih = String(s.getDate()).padStart(2,'0') + " / " + String(s.getMonth()+1).padStart(2,'0') + " / " + s.getFullYear() + " - " + String(s.getHours()).padStart(2,'0') + ":" + String(s.getMinutes()).padStart(2,'0');
     mesajlar.unshift({ tarih: tarih, yazi: yazi });
-    localStorage.setItem('dg_mesajlar', JSON.stringify(mesajlar));
+    localStorage.setItem('mh_mesajlar', JSON.stringify(mesajlar));
     document.getElementById('yeniMesajInput').value = "";
     yazmaKutusunuKapat();
     let alan = document.getElementById('duyuruAlani');
@@ -303,7 +304,7 @@
     if(!yoneticiMi) return;
     if(!confirm(seciliIndexler.size + " mesaj silinsin mi?")) return;
     mesajlar = mesajlar.filter((_, i) => !seciliIndexler.has(i));
-    localStorage.setItem('dg_mesajlar', JSON.stringify(mesajlar));
+    localStorage.setItem('mh_mesajlar', JSON.stringify(mesajlar));
     seciliIndexler.clear();
     let a=document.getElementById('duyuruAlani'); a.style.display='none'; duyurulariGoster();
     alert("Silindi!");
@@ -311,8 +312,8 @@
   function siteyiSilSor(){ document.getElementById('eminKutusu').style.display = 'flex'; }
   function iptalEt(){ document.getElementById('eminKutusu').style.display = 'none'; }
   function siteyiTamamenSil(){
-    localStorage.removeItem('dg_mesajlar');
-    localStorage.setItem('dg_silindi', 'evet');
+    localStorage.removeItem('mh_mesajlar');
+    localStorage.setItem('mh_silindi', 'evet');
     document.body.innerHTML = "<h1 style='color:red; margin-top:100px;'>manihaber Silindi</h1><p>Bu site yönetici tarafından silindi. Herkes için kapandı.</p>";
   }
 
@@ -334,7 +335,7 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
-const aktifRef = ref(db, "aktifler");
+const aktifRef = ref(db, "aktifler-manihaber");
 const benimKaydim = push(aktifRef);
 set(benimKaydim, true);
 onDisconnect(benimKaydim).remove();
@@ -346,4 +347,4 @@ onValue(aktifRef, (snap) => {
 </script>
 
 </body>
-   </html>
+</html>
