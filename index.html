@@ -5,67 +5,99 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>manihaber</title>
 <style>
-    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  body { background: linear-gradient(135deg,#ffd6f5,#d6c8ff,#b8f0ff,#fff9b8,#ffc8dd); background-size:400% 400%; animation: bgSevimli 15s ease infinite; color:#fff; font-family:Arial,sans-serif; margin:0; padding:0; text-align:center; min-height:100vh; overflow-x:hidden; }
-  @keyframes bgSevimli{ 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
-  .sevimli{ position:fixed; font-size:28px; z-index:0; opacity:.7; animation:ucus 6s ease-in-out infinite; pointer-events:none; }
-  @keyframes ucus{ 0%,100%{transform:translateY(0) rotate(-10deg)} 50%{transform:translateY(-18px) rotate(10deg)} }
-  .sevimli:nth-child(1){ top:8%; left:8%; } .sevimli:nth-child(2){ top:15%; right:10%; } .sevimli:nth-child(3){ top:55%; left:5%; } .sevimli:nth-child(4){ top:65%; right:6%; } .sevimli:nth-child(5){ top:85%; left:15%; } .sevimli:nth-child(6){ top:82%; right:18%; }
-  .ustBar{ display:flex; justify-content:space-between; align-items:center; padding:15px; position:relative; z-index:2; }
-  #solSilBtn{ display:none; background:linear-gradient(45deg,#ff5e8a,#ff9a5e); color:white; border:none; padding:10px 18px; border-radius:20px; font-weight:bold; font-size:14px; }
-  h1{ font-size:48px; margin:10px 0 0; font-weight:900; background:linear-gradient(90deg,#ff0080,#ff8a00,#ffee00,#00e676,#00aaff,#a100ff,#ff0080); background-size:300% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; animation:renkDegis 8s linear infinite; }
-  @keyframes renkDegis{ 0%{background-position:0% 50%} 100%{background-position:300% 50%} }
-  .altYazi{ color:#5a4a6a; margin-bottom:20px; font-weight:bold; background:rgba(255,255,255,.7); display:inline-block; padding:8px 16px; border-radius:20px; }
-  .anaBtn{ background:linear-gradient(45deg,#ff0080,#ff8a00,#ffee00,#00e676,#00aaff,#a100ff,#ff0080); background-size:300% 100%; color:#fff; border:none; padding:18px 32px; font-size:18px; font-weight:900; border-radius:25px; box-shadow:0 8px 25px rgba(255,0,128,.4); animation:renkDegis 6s linear infinite; cursor:pointer; }
-  #duyuruAlani{ display:none; padding:15px; padding-bottom:140px; position:relative; z-index:2; }
-  .mesajKutusu{ background:rgba(255,255,255,.95); border:3px solid transparent; border-radius:20px; padding:15px; margin:15px auto; max-width:550px; text-align:left; color:#333; box-shadow:0 8px 25px rgba(0,0,0,.12); background-image:linear-gradient(#fff,#fff),linear-gradient(45deg,#ff0080,#ff8a00,#ffee00,#00e676,#00aaff); background-origin:border-box; background-clip:padding-box,border-box; }
-  .mesajKutusu.secili{ border:2px solid red; background:#ffe0e0; box-shadow:0 0 18px red; }
-  .tarihSatiri{ background:linear-gradient(90deg,#ff0080,#00aaff); -webkit-background-clip:text; background-clip:text; color:transparent; font-size:13px; font-weight:900; }
-  .mesajYazisi{ font-size:19px; margin-top:8px; line-height:1.4; word-wrap:break-word; color:#333; }
-  .secildiYazisi{ color:red; font-size:12px; font-weight:bold; margin-top:8px; }
-  .yoneticiBtn{ background:linear-gradient(45deg,#a100ff,#00aaff); color:#fff; border:none; padding:12px 22px; border-radius:25px; margin-top:30px; font-weight:bold; }
-  #sifrePaneli{ display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(255,182,220,0.85); z-index:300; justify-content:center; align-items:center; }
-  #sifreIc{ background:#fff; border:3px solid #ff8ad8; border-radius:25px; padding:20px; width:90%; max-width:360px; position:relative; padding-top:45px; }
-  #sifreX{ position:absolute; top:-18px; left:50%; transform:translateX(-50%); background:linear-gradient(45deg,#ff0080,#ff5e5e); color:white; border:2px solid white; width:38px; height:38px; border-radius:50%; font-size:20px; font-weight:bold; }
-  input,textarea{ width:100%; padding:12px; margin:8px 0; background:#fff5fa; color:#333; border:2px solid #ffb8dd; border-radius:15px; font-size:16px; }
-  #sagAltBtn{ display:none; position:fixed; bottom:20px; right:20px; background:linear-gradient(45deg,#ff0080,#ff8a00,#ffee00,#00e676); background-size:300% 100%; animation:renkDegis 5s linear infinite; color:#fff; border:none; width:65px; height:65px; border-radius:50%; font-size:30px; font-weight:bold; z-index:100; }
-  #yazmaKutusu{ display:none; position:fixed; bottom:95px; right:15px; left:15px; background:#fff; border:3px solid #ffb8dd; padding:15px; border-radius:20px; z-index:101; }
-  .gonderBtn{ background:linear-gradient(45deg,#ff0080,#a100ff,#00aaff); background-size:300% 100%; animation:renkDegis 5s linear infinite; color:#fff; border:none; padding:14px; width:100%; border-radius:20px; font-weight:900; font-size:16px; }
-  #eminKutusu{ display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(255,180,220,0.9); z-index:200; justify-content:center; align-items:center; }
-  #eminIc{ background:#fff; border:3px solid red; padding:25px; border-radius:25px; max-width:320px; width:90%; color:#333; }
-  .eminBtn{ background:linear-gradient(45deg,#ff0080,#ff0000); color:white; border:none; padding:12px; width:100%; border-radius:15px; font-weight:bold; margin-top:10px; }
-  .iptalBtn{ background:#e0d8ff; color:#5a4a6a; border:none; padding:12px; width:100%; border-radius:15px; font-weight:bold; margin-top:10px; }
-  #dilBtn{ position:fixed; bottom:20px; left:20px; background:linear-gradient(45deg,#00aaff,#a100ff); color:white; border:2px solid white; padding:12px 18px; border-radius:30px; font-weight:bold; z-index:100; }
-  #dilPaneli{ display:none; position:fixed; bottom:70px; left:15px; background:#fff; border:2px solid #ffb8dd; border-radius:20px; padding:10px; z-index:102; width:220px; text-align:left; color:#333; }
-  .dilSec{ display:block; width:100%; background:#fff0f8; color:#333; border:none; padding:12px; margin:4px 0; border-radius:15px; text-align:left; font-size:15px; font-weight:bold; }
-  .dilSec.aktif{ background:linear-gradient(45deg,#ff0080,#a100ff); color:white; }
-  .ceviriNot{ font-size:11px; color:#888; margin-top:5px; }
-  #aktif-kutu{ position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#fff; color:#ff0080; padding:10px 18px; border-radius:50px; font-size:14px; font-weight:900; z-index:99; border:2px solid #ffb8dd; white-space:nowrap; }
-  .aktif-nokta{ display:inline-block; width:10px; height:10px; background:#00e676; border-radius:50%; margin-right:6px; animation:nabiz 1.5s infinite; }
-  @keyframes nabiz{ 0%,100%{transform:scale(1)} 50%{transform:scale(1.5)} }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{background:linear-gradient(135deg,#ffd6f5,#d6c8ff,#b8f0ff,#fff9b8,#ffc8dd);background-size:400% 400%;animation:bg 15s ease infinite;color:#fff;font-family:Arial,sans-serif;margin:0;text-align:center;min-height:100vh}
+  @keyframes bg{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+  h1{font-size:48px;margin:10px 0 0;font-weight:900;background:linear-gradient(90deg,#ff0080,#ff8a00,#ffee00,#00e676,#00aaff,#a100ff,#ff0080);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:renk 8s linear infinite}
+  @keyframes renk{0%{background-position:0% 50%}100%{background-position:300% 50%}}
+  .altYazi{color:#5a4a6a;font-weight:bold;background:rgba(255,255,255,.7);display:inline-block;padding:8px 16px;border-radius:20px}
+  .anaBtn{background:linear-gradient(45deg,#ff0080,#ff8a00,#ffee00,#00e676,#00aaff,#a100ff,#ff0080);background-size:300% 100%;color:#fff;border:none;padding:18px 32px;font-size:18px;font-weight:900;border-radius:25px;animation:renk 6s linear infinite;cursor:pointer}
+  #duyuruAlani{display:none;padding:15px;padding-bottom:140px}
+  .mesajKutusu{background:#fff;border-radius:20px;padding:15px;margin:15px auto;max-width:550px;text-align:left;color:#333;box-shadow:0 8px 25px rgba(0,0,0,.12)}
+  .mesajKutusu.secili{border:2px solid red;background:#ffe0e0}
+  .tarihSatiri{background:linear-gradient(90deg,#ff0080,#00aaff);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:13px;font-weight:900}
+  .mesajYazisi{font-size:19px;margin-top:8px;line-height:1.4}
+  .yoneticiBtn{background:linear-gradient(45deg,#a100ff,#00aaff);color:#fff;border:none;padding:12px 22px;border-radius:25px;margin-top:30px;font-weight:bold}
+  #sifrePaneli{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(255,182,220,0.85);z-index:300;justify-content:center;align-items:center}
+  #sifreIc{background:#fff;border:3px solid #ff8ad8;border-radius:25px;padding:20px;width:90%;max-width:360px;position:relative;padding-top:45px}
+  #sifreX{position:absolute;top:-18px;left:50%;transform:translateX(-50%);background:#ff0080;color:white;border:2px solid white;width:38px;height:38px;border-radius:50%;font-size:20px;font-weight:bold}
+  input,textarea{width:100%;padding:12px;margin:8px 0;background:#fff5fa;color:#333;border:2px solid #ffb8dd;border-radius:15px;font-size:16px}
+  #sagAltBtn{display:none;position:fixed;bottom:20px;right:20px;background:linear-gradient(45deg,#ff0080,#ff8a00,#ffee00,#00e676);color:#fff;border:none;width:65px;height:65px;border-radius:50%;font-size:30px;font-weight:bold;z-index:100}
+  #yazmaKutusu{display:none;position:fixed;bottom:95px;right:15px;left:15px;background:#fff;border:3px solid #ffb8dd;padding:15px;border-radius:20px;z-index:101}
+  .gonderBtn{background:linear-gradient(45deg,#ff0080,#a100ff,#00aaff);color:#fff;border:none;padding:14px;width:100%;border-radius:20px;font-weight:900;font-size:16px}
+  #dilBtn{position:fixed;bottom:20px;left:20px;background:linear-gradient(45deg,#00aaff,#a100ff);color:white;border:2px solid white;padding:12px 18px;border-radius:30px;font-weight:bold;z-index:100}
+  #dilPaneli{display:none;position:fixed;bottom:70px;left:15px;background:#fff;border:2px solid #ffb8dd;border-radius:20px;padding:10px;z-index:102;width:220px;text-align:left;color:#333}
+  .dilSec{display:block;width:100%;background:#fff0f8;color:#333;border:none;padding:12px;margin:4px 0;border-radius:15px;text-align:left;font-weight:bold}
+  .dilSec.aktif{background:linear-gradient(45deg,#ff0080,#a100ff);color:white}
+  #aktif-kutu{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#fff;color:#ff0080;padding:10px 18px;border-radius:50px;font-size:14px;font-weight:900;z-index:99;border:2px solid #ffb8dd;white-space:nowrap}
+  .aktif-nokta{display:inline-block;width:10px;height:10px;background:#00e676;border-radius:50%;margin-right:6px}
 </style>
 </head>
 <body>
-<div class="sevimli">💖</div><div class="sevimli">🌸</div><div class="sevimli">⭐</div><div class="sevimli">🍭</div><div class="sevimli">🦄</div><div class="sevimli">🎀</div>
-<div class="ustBar"><button id="solSilBtn" onclick="secilenleriSil()">🗑️ <span id="solSilYazi">SİL</span> (<span id="sayi">0</span>)</button><div style="width:60px"></div></div>
 <h1>manihaber 💖</h1>
 <p class="altYazi" id="altBaslik">✨ Resmi Duyuru Sistemi - Herkes Okuyabilir, Sadece Yönetici Yazabilir ✨</p><br>
 <button class="anaBtn" id="duyuruBtn" onclick="duyurulariGoster()">📢 DUYURULARI GÖR</button>
 <div id="duyuruAlani"></div>
 <button class="yoneticiBtn" id="yoneticiBtn" onclick="sifrePaneliniAc()">⚙️ Yönetici Girişi</button>
-<div id="sifrePaneli"><div id="sifreIc"><button id="sifreX" onclick="sifrePaneliniKapat()">✕</button><h3 style="background:linear-gradient(90deg,#ff0080,#00aaff); -webkit-background-clip:text; background-clip:text; color:transparent; margin:0; font-size:22px;" id="sifreBaslik">YÖNETİCİ GİRİŞİ 💖</h3><input type="password" id="sifreInput" placeholder="Şifreni yaz"><button class="anaBtn" style="width:100%; padding:12px;" id="girisBtn" onclick="sifreyiDogrula()">GİRİŞ YAP</button><p id="sifreDurum" style="color:red; font-size:13px;"></p></div></div>
+<div id="sifrePaneli"><div id="sifreIc"><button id="sifreX" onclick="sifrePaneliniKapat()">✕</button><h3 id="sifreBaslik" style="color:#ff0080;margin:0">YÖNETİCİ GİRİŞİ 💖</h3><input type="password" id="sifreInput" placeholder="Şifreni yaz"><button class="anaBtn" style="width:100%;padding:12px" onclick="sifreyiDogrula()">GİRİŞ YAP</button><p id="sifreDurum" style="color:red"></p></div></div>
 <button id="sagAltBtn" onclick="yazmaKutusunuAc()">+</button>
-<div id="yazmaKutusu"><textarea id="yeniMesajInput" placeholder="Mesajını yaz... 💖"></textarea><button class="gonderBtn" id="gonderBtn" onclick="mesajGonder()">GÖNDER 🚀</button><button onclick="yazmaKutusunuKapat()" id="vazgecBtn" style="background:none; border:none; color:#888; margin-top:10px;">Vazgeç</button></div>
+<div id="yazmaKutusu"><textarea id="yeniMesajInput" placeholder="Mesajını yaz... 💖"></textarea><button class="gonderBtn" onclick="mesajGonder()">GÖNDER 🚀</button><button onclick="yazmaKutusunuKapat()" style="background:none;border:none;color:#888;margin-top:10px">Vazgeç</button></div>
 <button id="dilBtn" onclick="dilPaneliniAc()">🌐 Language</button>
-<div id="dilPaneli"><b style="font-size:13px;" id="dilSecBaslik">Dil Seç / Select Language</b><button class="dilSec" data-dil="en" onclick="diliDegistir('en')">🇬🇧 English</button><button class="dilSec" data-dil="es" onclick="diliDegistir('es')">🇪🇸 Español</button><button class="dilSec" data-dil="fr" onclick="diliDegistir('fr')">🇫🇷 Français</button><button class="dilSec" data-dil="ru" onclick="diliDegistir('ru')">🇷🇺 Русский</button><button class="dilSec" data-dil="de" onclick="diliDegistir('de')">🇩🇪 Deutsch</button><button class="dilSec" data-dil="tr" onclick="diliDegistir('tr')">🇹🇷 Türkçe</button><button onclick="dilPaneliniKapat()" id="dilKapatBtn" style="background:none; border:none; color:#888; width:100%; margin-top:5px;">Kapat</button></div>
-<div id="eminKutusu"><div id="eminIc"><h2 style="color:red; margin:0;" id="eminBaslik">Emin misin?</h2><p id="eminYazi">Bu site ve tüm mesajlar herkesten silinecek! Geri alınamaz!</p><button class="eminBtn" id="eminEvetBtn" onclick="siteyiTamamenSil()">EVET, EMİNİM - SİL</button><button class="iptalBtn" id="eminIptalBtn" onclick="iptalEt()">İPTAL</button></div></div>
+<div id="dilPaneli"><b>Dil Seç</b><button class="dilSec" onclick="diliDegistir('tr')">🇹🇷 Türkçe</button><button class="dilSec" onclick="diliDegistir('en')">🇬🇧 English</button><button class="dilSec" onclick="diliDegistir('es')">🇪🇸 Español</button><button class="dilSec" onclick="diliDegistir('fr')">🇫🇷 Français</button><button class="dilSec" onclick="diliDegistir('ru')">🇷🇺 Русский</button><button class="dilSec" onclick="diliDegistir('de')">🇩🇪 Deutsch</button><button onclick="dilPaneliniKapat()" style="background:none;border:none;color:#888;width:100%">Kapat</button></div>
 <div id="aktif-kutu"><span class="aktif-nokta"></span><span id="aktif-sayi">1</span> aktif 💖</div>
+
+<script>
+// TUŞLAR BURADA - Firebase bozulsa bile çalışır!
+let mesajlar = JSON.parse(localStorage.getItem('mh_mesajlar') || '[]');
+let yoneticiMi = false;
+let seciliDil = localStorage.getItem('mh_dil') || 'tr';
+const SIFRE = "bNbN80";
+if(mesajlar.length===0){ mesajlar=[{tarih:"7 / 11 / 2026 - 14:00", yazi:"selam"}]; localStorage.setItem('mh_mesajlar', JSON.stringify(mesajlar)); }
+
+function duyurulariGoster(){
+  let alan=document.getElementById('duyuruAlani');
+  if(alan.style.display==='block'){ alan.style.display='none'; return; }
+  alan.style.display='block';
+  alan.innerHTML="";
+  if(mesajlar.length===0){ alan.innerHTML="<p>Henüz duyuru yok.</p>"; return; }
+  mesajlar.forEach(m=>{
+    let div=document.createElement('div');
+    div.className='mesajKutusu';
+    div.innerHTML=`<div class="tarihSatiri">📅 ${m.tarih}</div><div class="mesajYazisi">${m.yazi}</div>`;
+    alan.appendChild(div);
+  });
+}
+function sifrePaneliniAc(){ let p=document.getElementById('sifrePaneli'); p.style.display = (p.style.display==='flex')?'none':'flex'; }
+function sifrePaneliniKapat(){ document.getElementById('sifrePaneli').style.display='none'; }
+function sifreyiDogrula(){
+  let g=document.getElementById('sifreInput').value;
+  if(g===SIFRE){ yoneticiMi=true; document.getElementById('sagAltBtn').style.display='block'; document.getElementById('sifrePaneli').style.display='none'; alert("Hoş geldin Patron! 💖"); }
+  else alert("Yanlış şifre!");
+}
+function yazmaKutusunuAc(){ let p=document.getElementById('yazmaKutusu'); p.style.display=(p.style.display==='block')?'none':'block'; }
+function yazmaKutusunuKapat(){ document.getElementById('yazmaKutusu').style.display='none'; }
+function mesajGonder(){
+  if(!yoneticiMi){ alert("Önce şifre gir!"); return; }
+  let yazi=document.getElementById('yeniMesajInput').value.trim();
+  if(!yazi){ alert("Boş mesaj!"); return; }
+  let s=new Date(); let tarih=String(s.getDate()).padStart(2,'0')+" / "+String(s.getMonth()+1).padStart(2,'0')+" / "+s.getFullYear()+" - "+String(s.getHours()).padStart(2,'0')+":"+String(s.getMinutes()).padStart(2,'0');
+  mesajlar.unshift({tarih:tarih, yazi:yazi});
+  localStorage.setItem('mh_mesajlar', JSON.stringify(mesajlar));
+  document.getElementById('yeniMesajInput').value="";
+  yazmaKutusunuKapat();
+  // Firebase varsa oraya da gönder
+  if(window.firebaseGonder) window.firebaseGonder(tarih, yazi);
+  let alan=document.getElementById('duyuruAlani'); alan.style.display='none'; duyurulariGoster();
+  alert("Mesaj yayınlandı! 💖");
+}
+function dilPaneliniAc(){ let p=document.getElementById('dilPaneli'); p.style.display=(p.style.display==='block')?'none':'block'; }
+function dilPaneliniKapat(){ document.getElementById('dilPaneli').style.display='none'; }
+function diliDegistir(dil){ seciliDil=dil; localStorage.setItem('mh_dil',dil); alert("Dil değişti: "+dil); dilPaneliniKapat(); }
+</script>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, onValue, push, set, remove, onDisconnect } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
-// ===== BURAYA KENDİ FIREBASE KODUNU YAPIŞTIR =====
+import { getDatabase, ref, onValue, push, set, onDisconnect } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 const firebaseConfig = {
   apiKey: "BURAYA",
   authDomain: "BURAYA",
@@ -75,94 +107,23 @@ const firebaseConfig = {
   messagingSenderId: "BURAYA",
   appId: "BURAYA"
 };
-// ===================================================
-
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-const mesajRef = ref(db, "manihaber-mesajlar"); // SADECE manihaber, Dijital Ghost ile karışmaz!
-const aktifRef = ref(db, "aktifler-manihaber");
-
-let mesajlar = []; // {id, tarih, yazi}
-let seciliIdler = new Set();
-let yoneticiMi = false;
-let basiliTimer = null;
-let seciliDil = localStorage.getItem('mh_dil') || 'tr';
-let ceviriCache = {};
-const SIFRE = "bNbN80";
-
-window.mesajlar = mesajlar;
-
-async function cevir(yazi, hedefDil){
-  if(!yazi) return yazi; if(hedefDil==='tr') return yazi;
-  let key = yazi+"||"+hedefDil; if(ceviriCache[key]) return ceviriCache[key];
-  try{ let url="https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl="+hedefDil+"&dt=t&q="+encodeURIComponent(yazi); let res=await fetch(url); let data=await res.json(); let sonuc=""; if(data&&data[0]) data[0].forEach(p=>{if(p[0]) sonuc+=p[0];}); if(sonuc){ceviriCache[key]=sonuc; return sonuc;} }catch(e){}
-  return yazi;
-}
-const arayuz = {
-  tr:{ alt:"✨ Resmi Duyuru Sistemi - Herkes Okuyabilir, Sadece Yönetici Yazabilir ✨", duyuru:"📢 DUYURULARI GÖR", yonetici:"⚙️ Yönetici Girişi", sifreBaslik:"YÖNETİCİ GİRİŞİ 💖", giris:"GİRİŞ YAP", sifrePlaceholder:"Şifreni yaz", gonder:"GÖNDER 🚀", vazgec:"Vazgeç", mesajPlaceholder:"Mesajını yaz... 💖", eminBaslik:"Emin misin?", eminYazi:"Bu site ve tüm mesajlar herkesten silinecek! Geri alınamaz!", eminEvet:"EVET, EMİNİM - SİL", eminIptal:"İPTAL", solSil:"SİL", dilSecBaslik:"Dil Seç / Select Language", dilKapat:"Kapat", bos:"Henüz duyuru yok.", secildi:"✓ SEÇİLDİ" },
-  en:{ alt:"Official Announcement System - Everyone Can Read, Only Admin Can Write", duyuru:"📢 SEE ANNOUNCEMENTS", yonetici:"⚙️ Admin Login", sifreBaslik:"ADMIN LOGIN", giris:"LOG IN", sifrePlaceholder:"Write your password", gonder:"SEND 🚀", vazgec:"Cancel", mesajPlaceholder:"Write your message...", eminBaslik:"Are you sure?", eminYazi:"This site and all messages will be deleted for everyone!", eminEvet:"YES, I'M SURE - DELETE", eminIptal:"CANCEL", solSil:"DELETE", dilSecBaslik:"Select Language", dilKapat:"Close", bos:"No announcements yet.", secildi:"✓ SELECTED" },
-  es:{ alt:"Sistema Oficial de Anuncios", duyuru:"📢 VER ANUNCIOS", yonetici:"⚙️ Acceso Admin", sifreBaslik:"ACCESO ADMIN", giris:"ENTRAR", sifrePlaceholder:"Escribe tu contraseña", gonder:"ENVIAR", vazgec:"Cancelar", mesajPlaceholder:"Escribe tu mensaje...", eminBaslik:"¿Estás seguro?", eminYazi:"¡Se eliminará para todos!", eminEvet:"SÍ, ESTOY SEGURO - ELIMINAR", eminIptal:"CANCELAR", solSil:"ELIMINAR", dilSecBaslik:"Elige idioma", dilKapat:"Cerrar", bos:"Aún no hay anuncios.", secildi:"✓ SELECCIONADO" },
-  fr:{ alt:"Système d'Annonce Officiel", duyuru:"📢 VOIR LES ANNONCES", yonetici:"⚙️ Connexion Admin", sifreBaslik:"CONNEXION ADMIN", giris:"SE CONNECTER", sifrePlaceholder:"Écris ton mot de passe", gonder:"ENVOYER", vazgec:"Annuler", mesajPlaceholder:"Écris ton message...", eminBaslik:"Tu es sûr ?", eminYazi:"Sera supprimé pour tout le monde !", eminEvet:"OUI, JE SUIS SÛR - SUPPRIMER", eminIptal:"ANNULER", solSil:"SUPPRIMER", dilSecBaslik:"Choisir la langue", dilKapat:"Fermer", bos:"Pas encore d'annonces.", secildi:"✓ SÉLECTIONNÉ" },
-  ru:{ alt:"Официальная Система Объявлений", duyuru:"📢 ПОСМОТРЕТЬ ОБЪЯВЛЕНИЯ", yonetici:"⚙️ Вход Админа", sifreBaslik:"ВХОД АДМИНА", giris:"ВОЙТИ", sifrePlaceholder:"Напиши пароль", gonder:"ОТПРАВИТЬ", vazgec:"Отмена", mesajPlaceholder:"Напиши сообщение...", eminBaslik:"Ты уверен?", eminYazi:"Будет удалено для всех!", eminEvet:"ДА, Я УВЕРЕН - УДАЛИТЬ", eminIptal:"ОТМЕНА", solSil:"УДАЛИТЬ", dilSecBaslik:"Выбрать язык", dilKapat:"Закрыть", bos:"Пока нет объявлений.", secildi:"✓ ВЫБРАНО" },
-  de:{ alt:"Offizielles Ankündigungssystem", duyuru:"📢 ANKÜNDIGUNGEN ANSEHEN", yonetici:"⚙️ Admin Login", sifreBaslik:"ADMIN LOGIN", giris:"EINLOGGEN", sifrePlaceholder:"Schreib dein Passwort", gonder:"SENDEN", vazgec:"Abbrechen", mesajPlaceholder:"Schreib deine Nachricht...", eminBaslik:"Bist du sicher?", eminYazi:"Wird für alle gelöscht!", eminEvet:"JA, ICH BIN SICHER - LÖSCHEN", eminIptal:"ABBRECHEN", solSil:"LÖSCHEN", dilSecBaslik:"Sprache wählen", dilKapat:"Schließen", bos:"Noch keine Ankündigungen.", secildi:"✓ AUSGEWÄHLT" }
-};
-function arayuzuUygula(dil){ let t=arayuz[dil]||arayuz['tr']; document.getElementById('altBaslik').innerText=t.alt; document.getElementById('duyuruBtn').innerText=t.duyuru; document.getElementById('yoneticiBtn').innerText=t.yonetici; document.getElementById('sifreBaslik').innerText=t.sifreBaslik; document.getElementById('girisBtn').innerText=t.giris; document.getElementById('sifreInput').placeholder=t.sifrePlaceholder; document.getElementById('gonderBtn').innerText=t.gonder; document.getElementById('vazgecBtn').innerText=t.vazgec; document.getElementById('yeniMesajInput').placeholder=t.mesajPlaceholder; document.getElementById('eminBaslik').innerText=t.eminBaslik; document.getElementById('eminYazi').innerText=t.eminYazi; document.getElementById('eminEvetBtn').innerText=t.eminEvet; document.getElementById('eminIptalBtn').innerText=t.eminIptal; document.getElementById('solSilYazi').innerText=t.solSil; document.getElementById('dilSecBaslik').innerText=t.dilSecBaslik; document.getElementById('dilKapatBtn').innerText=t.dilKapat; }
-window.diliDegistir = function(dil){ seciliDil=dil; localStorage.setItem('mh_dil',dil); document.querySelectorAll('.dilSec').forEach(b=>b.classList.toggle('aktif',b.dataset.dil===dil)); arayuzuUygula(dil); dilPaneliniKapat(); renderMesajlar(); }
-window.dilPaneliniAc = function(){ let p=document.getElementById('dilPaneli'); p.style.display=(p.style.display==='block')?'none':'block'; }
-window.dilPaneliniKapat = function(){ document.getElementById('dilPaneli').style.display='none'; }
-window.sifrePaneliniAc = function(){ let p=document.getElementById('sifrePaneli'); if(p.style.display==='flex') p.style.display='none'; else {p.style.display='flex'; document.getElementById('sifreInput').focus();} }
-window.sifrePaneliniKapat = function(){ document.getElementById('sifrePaneli').style.display='none'; }
-window.yazmaKutusunuAc = function(){ let p=document.getElementById('yazmaKutusu'); p.style.display=(p.style.display==='block')?'none':'block'; }
-window.yazmaKutusunuKapat = function(){ document.getElementById('yazmaKutusu').style.display='none'; }
-window.duyurulariGoster = function(){ let alan=document.getElementById('duyuruAlani'); if(alan.style.display==='block'){alan.style.display='none'; return;} alan.style.display='block'; renderMesajlar(); }
-
-function renderMesajlar(){
-  let alan=document.getElementById('duyuruAlani'); if(alan.style.display!=='block') return;
-  let t=arayuz[seciliDil]||arayuz['tr'];
-  if(mesajlar.length===0){ alan.innerHTML="<p>"+t.bos+"</p>"; return; }
-  alan.innerHTML="";
-  mesajlar.forEach((m)=>{
-    let div=document.createElement('div');
-    div.className='mesajKutusu'+(seciliIdler.has(m.id)?' secili':'');
-    div.innerHTML=`<div class="tarihSatiri">📅 ${m.tarih}</div><div class="mesajYazisi">${m.yazi}</div>${seciliDil!=='tr'?'<div class="ceviriNot">Çevriliyor... ⏳</div>':''}${seciliIdler.has(m.id)?'<div class="secildiYazisi">'+t.secildi+'</div>':''}`;
-    div.addEventListener('click',()=>{ if(!yoneticiMi) return; if(seciliIdler.size>0){ if(seciliIdler.has(m.id)) seciliIdler.delete(m.id); else seciliIdler.add(m.id); renderMesajlar(); solSilGuncelle(); } });
-    div.addEventListener('touchstart',()=>basiliBasla(m.id),{passive:true}); div.addEventListener('touchend',basiliBirak);
-    div.addEventListener('mousedown',()=>basiliBasla(m.id)); div.addEventListener('mouseup',basiliBirak); div.addEventListener('mouseleave',basiliBirak);
-    div.addEventListener('contextmenu',e=>e.preventDefault());
-    alan.appendChild(div);
-    if(seciliDil!=='tr'){ cevir(m.yazi,seciliDil).then(cv=>{ let yaziEl=div.querySelector('.mesajYazisi'); let notEl=div.querySelector('.ceviriNot'); if(yaziEl) yaziEl.innerText=cv; if(notEl) notEl.innerText='Orijinal: '+m.yazi; }); }
-  });
-  solSilGuncelle();
-}
-
-window.sifreyiDogrula = function(){ let girilen=document.getElementById('sifreInput').value; if(girilen===SIFRE){ yoneticiMi=true; document.getElementById('sifreDurum').innerText="Şifre doğrulandı! 💖"; document.getElementById('sagAltBtn').style.display='block'; document.getElementById('sifrePaneli').style.display='none'; alert("Hoş geldin Patron! 💖"); renderMesajlar(); } else alert("Yanlış şifre!"); }
-window.mesajGonder = function(){ if(!yoneticiMi){alert("Önce şifre gir!"); return;} let yazi=document.getElementById('yeniMesajInput').value.trim(); if(!yazi){alert("Boş mesaj gönderemezsin!"); return;} let s=new Date(); let tarih=String(s.getDate()).padStart(2,'0')+" / "+String(s.getMonth()+1).padStart(2,'0')+" / "+s.getFullYear()+" - "+String(s.getHours()).padStart(2,'0')+":"+String(s.getMinutes()).padStart(2,'0'); push(mesajRef,{tarih:tarih, yazi:yazi, zaman: Date.now()}); document.getElementById('yeniMesajInput').value=""; yazmaKutusunuKapat(); document.getElementById('duyuruAlani').style.display='block'; alert("Mesaj yayınlandı! 💖 HERKES görecek!"); }
-function basiliBasla(id){ if(!yoneticiMi) return; if(seciliIdler.size>0) return; basiliTimer=setTimeout(()=>{ seciliIdler.add(id); if(navigator.vibrate) navigator.vibrate(120); renderMesajlar(); },2000); }
-function basiliBirak(){ if(basiliTimer) clearTimeout(basiliTimer); }
-function solSilGuncelle(){ let btn=document.getElementById('solSilBtn'); if(seciliIdler.size>0){btn.style.display='block'; document.getElementById('sayi').innerText=seciliIdler.size;} else btn.style.display='none'; }
-window.secilenleriSil = function(){ if(!yoneticiMi) return; if(!confirm(seciliIdler.size+" mesaj herkes için silinsin mi?")) return; seciliIdler.forEach(id=>{ remove(ref(db,"manihaber-mesajlar/"+id)); }); seciliIdler.clear(); alert("Silindi! Herkesten silindi!"); }
-window.siteyiSilSor = function(){ document.getElementById('eminKutusu').style.display='flex'; }
-window.iptalEt = function(){ document.getElementById('eminKutusu').style.display='none'; }
-window.siteyiTamamenSil = function(){ mesajlar.forEach(m=>remove(ref(db,"manihaber-mesajlar/"+m.id))); alert("Tüm mesajlar herkesten silindi!"); document.getElementById('eminKutusu').style.display='none'; }
-
-// HERKES İÇİN CANLI DİNLEME - Biri mesaj atınca herkesin ekranında çıkar!
-onValue(mesajRef,(snap)=>{
-  let data=snap.val()||{};
-  mesajlar=Object.keys(data).map(k=>({id:k, ...data[k]})).sort((a,b)=>(b.zaman||0)-(a.zaman||0));
-  if(mesajlar.length===0){
-    // İlk açılışta sadece 1 tane selam olsun
-    push(mesajRef,{tarih:"7 / 11 / 2026 - 14:00", yazi:"selam", zaman: Date.now()});
-    return;
+try{
+  // Eğer BURAYA dolu değilse Firebase'i atla, tuşlar yine çalışsın
+  if(firebaseConfig.apiKey !== "BURAYA"){
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const mesajRef = ref(db, "manihaber-mesajlar");
+    window.firebaseGonder = (tarih, yazi)=>{ push(mesajRef,{tarih:tarih, yazi:yazi, zaman: Date.now()}); };
+    onValue(mesajRef,(snap)=>{
+      let data=snap.val()||{};
+      let liste=Object.keys(data).map(k=>({id:k, ...data[k]})).sort((a,b)=>(b.zaman||0)-(a.zaman||0));
+      if(liste.length>0){ mesajlar=liste; localStorage.setItem('mh_mesajlar', JSON.stringify(mesajlar)); let alan=document.getElementById('duyuruAlani'); if(alan.style.display==='block'){ alan.style.display='none'; duyurulariGoster(); } }
+    });
+    const aktifRef = ref(db, "aktifler-manihaber");
+    const benimKaydim = push(aktifRef); set(benimKaydim,true); onDisconnect(benimKaydim).remove();
+    onValue(aktifRef,(snap)=>{ let sayi=snap.size; if(sayi<1) sayi=1; document.getElementById("aktif-sayi").innerText=sayi; });
   }
-  renderMesajlar();
-});
-
-// Aktif sayısı
-const benimKaydim=push(aktifRef); set(benimKaydim,true); onDisconnect(benimKaydim).remove();
-onValue(aktifRef,(snap)=>{ let sayi=snap.size; if(sayi<1) sayi=1; document.getElementById("aktif-sayi").innerText=sayi; });
-
-arayuzuUygula(seciliDil);
-document.querySelectorAll('.dilSec').forEach(b=>b.classList.toggle('aktif',b.dataset.dil===seciliDil));
+}catch(e){ console.log("Firebase yok, local çalışıyor"); }
 </script>
 </body>
 </html>
