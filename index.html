@@ -1,336 +1,59 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>CLANS - Blockpost Gibi</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Site Closed</title>
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
-body{margin:0;font-family:Arial,sans-serif;background:#05070d;color:#fff;overflow:hidden}
-#app{width:100vw;height:100vh;height:100dvh;display:flex;flex-direction:column;max-width:520px;margin:0 auto;background:#0b0f1a;position:relative}
-header{text-align:center;padding:22px 10px 14px;background:#0e1626;border-bottom:2px solid #1e2e4a;position:relative}
-header h1{margin:0;font-size:38px;letter-spacing:3px;font-weight:900}
-header h1 span{color:#00e676}
-header p{margin:4px 0 0;font-size:13px;opacity:.6;letter-spacing:2px}
-#centerArea{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:20px;gap:16px;overflow-y:auto}
-.mainBtn{width:100%;max-width:380px;border:2px solid #000;border-radius:22px;padding:22px 20px;font-weight:900;font-size:20px;cursor:pointer;box-shadow:0 6px 0 rgba(0,0,0,.5)}
-.mainBtn:active{transform:translateY(4px);box-shadow:0 2px 0 rgba(0,0,0,.5)}
-.green{background:#00e676;color:#000}
-.yellow{background:#ffd700;color:#000}
-.card{width:100%;max-width:380px;background:#16213a;border:2px solid #2a3a5a;border-radius:22px;padding:22px}
-.card h3{margin:0 0 6px;font-size:21px;text-align:center}
-.card p{margin:0 0 10px;text-align:center;font-size:13px;opacity:.6}
-input{width:100%;padding:16px;border-radius:14px;border:2px solid #333;background:#0b0f1a;color:#fff;font-size:17px;margin-top:12px;outline:none}
-input:focus{border-color:#00e676}
-.smallBtn{width:100%;border:2px solid #000;border-radius:16px;padding:16px;font-weight:900;font-size:18px;margin-top:14px;cursor:pointer}
-.backLink{text-align:center;margin-top:12px;font-size:14px;opacity:.7;cursor:pointer;background:#0b0f1a;border:1px solid #333;padding:10px;border-radius:14px}
-.hidden{display:none!important}
-.tipBox{background:#0e2a1a;border:2px solid #00e676;border-radius:16px;padding:12px;text-align:center;font-size:13px;line-height:1.6}
-.tipBox b{color:#00e676}
-#chatScreen{display:none;flex-direction:column;height:100%}
-#chatHeader{display:flex;align-items:center;gap:10px;padding:12px;background:#16213a;border-bottom:2px solid #2a3a5a}
-#chatHeader button{background:#fff;border:2px solid #ccc;border-radius:20px;padding:8px 14px;font-weight:900;cursor:pointer}
-#messages{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px}
-.msg{max-width:84%;padding:11px 13px;border-radius:18px;font-size:15px;word-break:break-word}
-.me{align-self:flex-end;background:#00a884;color:#fff}
-.other{align-self:flex-start;background:#1e2e4a;color:#fff}
-.msg small{display:block;font-size:11px;opacity:.7;margin-top:4px}
-.memberList{display:flex;flex-wrap:wrap;gap:6px;padding:8px 12px}
-.member{background:#0b0f1a;border:1px solid #333;padding:8px 12px;border-radius:20px;font-size:13px}
-#inputBar{display:flex;gap:8px;padding:10px;background:#16213a;align-items:center;border-top:2px solid #2a3a5a;position:relative}
-#inputBar input{margin:0;flex:1;border-radius:25px}
-.iconBtn{width:50px;height:50px;border-radius:50%;border:2px solid #000;font-size:22px;flex-shrink:0;cursor:pointer}
-.sendBtn{background:#00e676;color:#000}
-.pollBtn{background:#ffd700;color:#000}
-.dragBtn{position:absolute;z-index:999;touch-action:none;cursor:grab;transition:box-shadow .2s, transform .2s}
-.dragBtn.dragging{cursor:grabbing;transform:scale(1.15);box-shadow:0 0 0 3px #00e676, 0 10px 30px rgba(0,230,118,.5)!important;z-index:2001}
-#adminBtn{left:10px;bottom:10px;background:#222;color:#ccc;border:2px solid #444;border-radius:20px;padding:12px 16px;font-size:13px;font-weight:900}
-#adminBtn.adminOn{background:#ff3b30;color:#fff}
-#langBtn{left:10px;bottom:62px;background:#16213a;color:#fff;border:2px solid #00e676;border-radius:20px;padding:12px 16px;font-size:13px;font-weight:900}
-#aiBtn{position:absolute;top:106px;left:12px;background:#7c3aed;color:#fff;border:2px solid #a78bfa;border-radius:20px;padding:10px 14px;font-size:13px;font-weight:900;z-index:999;box-shadow:0 4px 15px rgba(124,58,237,.5);cursor:pointer;touch-action:none}
-#aiBtn.dragging{transform:scale(1.15);box-shadow:0 0 0 3px #a78bfa, 0 10px 30px rgba(124,58,237,.6)!important;z-index:2001}
-#dragHint{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#00e676;color:#000;padding:14px 20px;border-radius:20px;font-weight:900;z-index:3000;display:none;text-align:center;font-size:15px}
-#langPanel{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:2000;display:none;align-items:flex-end;justify-content:center}
-#langPanel.show{display:flex}
-#langBox{background:#16213a;width:100%;max-width:520px;max-height:80vh;overflow-y:auto;border-radius:25px 25px 0 0;padding:20px;padding-bottom:30px;border-top:3px solid #00e676}
-.langItem{display:flex;align-items:center;gap:12px;background:#0b0f1a;border:2px solid #333;padding:15px 16px;border-radius:16px;margin-top:10px;cursor:pointer;font-size:16px;font-weight:700}
-.langItem.active{border-color:#00e676;background:#0e2a1a}
-.langItem .flag{font-size:26px}
-#adminPanel{position:absolute;inset:0;background:#0b0f1a;z-index:100;display:none;flex-direction:column;overflow-y:auto}
-.adminCard{background:#16213a;border:2px solid #ff3b30;border-radius:16px;padding:15px;margin:10px;cursor:pointer}
-.adminCard.selected{background:#0e2a1a!important;border-color:#00e676!important;box-shadow:0 0 0 2px #00e676}
-#adminSelectBar{display:none;gap:8px;padding:12px;background:#00e676;color:#000;align-items:center;position:sticky;top:0;z-index:5}
-#adminSelectBar button{border:2px solid #000;border-radius:20px;padding:9px 14px;font-weight:900}
-#pollPanel{position:absolute;left:10px;bottom:calc(100% + 38px);background:#16213a;border:2px solid #ffd700;border-radius:20px;padding:16px;z-index:500;display:none;flex-direction:column;gap:10px;width:calc(100vw - 20px);max-width:480px}
-#pollPanel.show{display:flex}
-.pollOpt{background:#0b0f1a;border:2px solid #333;border-radius:12px;padding:10px 12px;margin-top:8px;cursor:pointer;font-weight:700;font-size:14px;position:relative;overflow:hidden}
-.pollOpt .fill{position:absolute;left:0;top:0;bottom:0;background:#00e676;opacity:.35}
-.pollOpt .txt{position:relative;display:flex;justify-content:space-between}
-#aiScreen{position:absolute;inset:0;background:#0a0a0f;z-index:1500;display:none;flex-direction:column}
-#aiHeader{display:flex;align-items:center;gap:10px;padding:14px;background:#1a1a22;border-bottom:1px solid #2a2a35}
-#aiHeader button{background:#fff;border:none;border-radius:20px;padding:8px 14px;font-weight:900;cursor:pointer}
-#aiChat{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:14px}
-.aiMsg{max-width:88%;padding:12px 15px;border-radius:18px;font-size:15px;line-height:1.6;word-break:break-word;white-space:pre-wrap}
-.aiMsg.me{align-self:flex-end;background:#00e676;color:#000}
-.aiMsg.ai{align-self:flex-start;background:#1e1e28;color:#fff;border:1px solid #2a2a35}
-#aiTyping{display:none;align-self:flex-start;background:#1e1e28;padding:12px 16px;border-radius:18px}
-.dot{display:inline-block;width:8px;height:8px;background:#a78bfa;border-radius:50%;margin:0 2px;animation:b 1s infinite}
-.dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
-@keyframes b{0%,100%{opacity:.3}50%{opacity:1}}
-#aiInputBar{display:flex;gap:8px;padding:12px;background:#1a1a22;border-top:1px solid #2a2a35;align-items:flex-end}
-#aiInputBar textarea{flex:1;background:#0a0a0f;color:#fff;border:1px solid #333;border-radius:20px;padding:12px 14px;font-size:15px;outline:none;resize:none;max-height:100px;font-family:Arial}
-#aiSendBtn{width:50px;height:50px;border-radius:50%;background:#7c3aed;border:2px solid #000;color:#fff;font-size:22px;cursor:pointer;flex-shrink:0}
-.aiQuick{display:flex;gap:8px;padding:0 12px 10px;background:#1a1a22;overflow-x:auto;white-space:nowrap}
-.aiQuick button{background:#222;border:1px solid #444;color:#fff;border-radius:20px;padding:8px 14px;font-size:13px;white-space:nowrap;cursor:pointer}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:#ffffff;
+    width:100vw;
+    height:100vh;
+    height:100dvh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:Arial, sans-serif;
+  }
+  .box{
+    background:#000000;
+    color:#ffffff;
+    width:90%;
+    max-width:520px;
+    padding:60px 30px;
+    border-radius:30px;
+    text-align:center;
+    box-shadow:0 20px 60px rgba(0,0,0,0.35);
+  }
+  .box h1{
+    font-size:32px;
+    font-weight:900;
+    letter-spacing:1px;
+    line-height:1.3;
+  }
+  .box p{
+    margin-top:15px;
+    font-size:15px;
+    opacity:0.6;
+    letter-spacing:2px;
+  }
+  .dot{
+    width:12px;
+    height:12px;
+    background:#ff3b30;
+    border-radius:50%;
+    display:inline-block;
+    margin-bottom:20px;
+    box-shadow:0 0 20px #ff3b30;
+  }
 </style>
 </head>
 <body>
-<div id="app">
-<div id="home" style="display:flex;flex-direction:column;height:100%">
-<header><h1><span>CLANS</span></h1><p>Herkes Çıkınca Şifre Boşalır!</p><button id="adminKlanlarBtn" onclick="openAdminPanel()" style="display:none;position:absolute;top:12px;right:12px;background:#ff3b30;color:#fff;border:2px solid #ff6b60;border-radius:20px;padding:10px 14px;font-weight:900">👀 Klanları Gör</button></header>
-<div id="centerArea">
-<div id="menuBtns" style="width:100%;max-width:380px;display:flex;flex-direction:column;gap:16px">
-<button class="mainBtn green" onclick="showCreate()">➕ KLAN OLUŞTUR</button>
-<button class="mainBtn yellow" onclick="showAra()">🔍 KLAN ARA</button>
-<div class="tipBox">💡 <b>Blockpost gibi!</b><br>Klan Adı + Şifre ile yükle,<br>Başka oyuncu aynı Ad + Şifre ile girsin!</div>
-</div>
-<div id="createBox" class="card hidden"><h3>➕ Klan Oluştur</h3><p>Klanını yükle, herkes girsin!</p>
-<input id="createClanName" placeholder="Klan Adı">
-<input id="createMyName" placeholder="Adın">
-<input id="createPass" placeholder="Şifre" type="text" autocomplete="off">
-<button class="smallBtn green" onclick="createClan()">KUR ✅</button>
-<div class="backLink" onclick="backToMenu()">◀ Geri</div></div>
-<div id="araBox" class="card hidden"><h3>🔍 Klan Ara</h3><p>Klan Adı + Şifre yaz, gir!</p>
-<input id="araClanName" placeholder="Klan Adı">
-<input id="araMyName" placeholder="Adın">
-<input id="araPass" placeholder="Şifre" type="text" autocomplete="off">
-<button class="smallBtn yellow" onclick="araGir()">GİR 🔍</button>
-<div class="backLink" onclick="backToMenu()">◀ Geri</div></div>
-</div>
-</div>
-<div id="chatScreen">
-<div id="chatHeader"><button onclick="leaveClan()">◀ Çık</button><div style="flex:1"><b id="chatTitle">Klan</b><br><span id="chatInfo" style="font-size:12px;opacity:.7"></span></div><button onclick="leaveClan()" style="background:#ff3b30;color:#fff;border-color:#7a120c">Çık</button></div>
-<div class="memberList" id="memberList"></div>
-<div id="messages"></div>
-<div id="inputBar">
-<button class="iconBtn pollBtn" onclick="togglePoll()">📊</button>
-<input id="msgInput" placeholder="Mesaj yaz..." onkeydown="if(event.key==='Enter') sendMsg()">
-<button class="iconBtn sendBtn" onclick="sendMsg()">➤</button>
-<div id="pollPanel">
-<h3>📊 Anket Oluştur</h3>
-<input id="pollQ" placeholder="Sorun ne?">
-<input class="pollOptVal" placeholder="Şık 1 - Evet">
-<input class="pollOptVal" placeholder="Şık 2 - Hayır">
-<button class="smallBtn yellow" onclick="createPoll()">Anketi Oluştur</button>
-<button class="smallBtn" style="background:#fff;color:#000" onclick="togglePoll()">✕ İptal</button>
-</div>
-</div>
-</div>
-<button id="aiBtn" class="dragBtn">🤖 Yapay Zeka</button>
-<button id="langBtn" class="dragBtn">🌐 TR</button>
-<button id="adminBtn" class="dragBtn">⚙️ Admin</button>
-<div id="aiScreen">
-<div id="aiHeader"><button onclick="closeAI()">◀ Geri</button><div style="display:flex;align-items:center;gap:10px"><div style="width:38px;height:38px;background:#7c3aed;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px">🤖</div><div><b>CLANS AI</b><br><span style="font-size:12px;opacity:.6">Her Soruya Cevap Verir • Bedava</span></div></div><button onclick="newAIChat()" style="margin-left:auto;background:#222;color:#fff;border:1px solid #444">✨ Yeni</button></div>
-<div id="aiChat"></div>
-<div id="aiTyping"><span class="dot"></span><span class="dot"></span><span class="dot"></span> CLANS AI yazıyor...</div>
-<div class="aiQuick">
-<button onclick="askAIQuick('Pilav nasıl yapılır?')">🍚 Pilav</button>
-<button onclick="askAIQuick('Ateş nasıl yakılır?')">🔥 Ateş</button>
-<button onclick="askAIQuick('Televizyon nasıl açılır?')">📺 TV</button>
-<button onclick="askAIQuick('Buzdolabı nasıl sökülür?')">🧊 Buzdolabı</button>
-</div>
-<div id="aiInputBar">
-<textarea id="aiInp" rows="1" placeholder="Her şeyi sor..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAIMsg()}"></textarea>
-<button id="aiSendBtn" onclick="sendAIMsg()">➤</button>
-</div>
-</div>
-<div id="dragHint">✋ Taşıyorsun... Bırak!</div>
-<div id="langPanel" onclick="if(event.target===this) closeLang()"><div id="langBox"><div class="langItem" onclick="closeLang()" style="justify-content:center;background:#ff3b30;border-color:#ff3b30;color:#fff;margin-top:0">✕ Kapat</div><h3 style="text-align:center">🌐 Dil Seç</h3><div id="langList"></div></div></div>
-<div id="adminPanel">
-<header style="display:flex;justify-content:space-between;align-items:center;padding:16px;background:#ff3b30;color:#fff"><div><b>👀 Tüm Klanlar</b></div><button onclick="closeAdminPanel()" style="background:#fff;border:none;padding:10px 14px;border-radius:20px;font-weight:900">✕ Kapat</button></header>
-<div id="adminSelectBar"><b id="adminSelectText" style="flex:1">1 seçildi</b><button onclick="hideSelectedClans()" style="background:#000;color:#fff">🙈 Benden Gizle</button><button onclick="cancelAdminSelection()" style="background:#fff;color:#000">✕ İptal</button></div>
-<div style="padding:10px;text-align:center"><b>Toplam Klan: <span id="totalClan">0</span></b> <span id="hiddenCount"></span><br><button onclick="showHiddenClans()" style="margin-top:8px;background:#333;color:#fff;border:1px solid #666;border-radius:20px;padding:8px 14px;font-weight:900">👀 Gizli Klanları Geri Göster</button></div>
-<div id="adminList"></div>
-</div>
-</div>
-<script>
-// ========== FIREBASE - BLOCKPOST GİBİ SUNUCU ==========
-// console.firebase.google.com -> Realtime Database -> linkini buraya yapıştır
-// Örnek: https://clans-amin-default-rtdb.firebaseio.com
-let FIREBASE_URL = "BURAYA_YAPIŞTIR";
-let DB_URL = FIREBASE_URL.replace(/\/$/,'') + "/clans.json";
-let clans = [];
-let myName='', myMemberId='', currentClanId=null, isAdmin=false, ADMIN_PASS="tYgH12";
-let hiddenForAdmin = JSON.parse(localStorage.getItem('hidden_clans_admin_v3')||'[]');
-let adminSelected = new Set(), adminSelectionMode=false;
-async function getCloud(){
-  if(!FIREBASE_URL || FIREBASE_URL==="BURAYA_YAPIŞTIR"){
-    return {clans: JSON.parse(localStorage.getItem('clans_v3')||'[]')};
-  }
-  try{
-    let r = await fetch(DB_URL);
-    let j = await r.json();
-    if(!j) return {clans:[]};
-    // Firebase obje döndürür, diziye çevir
-    let list = Array.isArray(j) ? j : Object.values(j);
-    return {clans: list.filter(Boolean)};
-  }catch(e){ return {clans: JSON.parse(localStorage.getItem('clans_v3')||'[]')}; }
-}
-async function saveCloud(){
-  localStorage.setItem('clans_v3', JSON.stringify(clans));
-  if(!FIREBASE_URL || FIREBASE_URL==="BURAYA_YAPIŞTIR") return;
-  try{ await fetch(DB_URL, {method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(clans)}); }catch(e){}
-}
-async function refreshClans(){ let d = await getCloud(); clans = d.clans || []; }
-let lang = localStorage.getItem('clans_lang')||'tr';
-let LANGS=[{code:'tr',flag:'🇹🇷',name:'Türkçe'},{code:'en',flag:'🇬🇧',name:'English'},{code:'az',flag:'🇦🇿',name:'Azərbaycanca'},{code:'ru',flag:'🇷🇺',name:'Русский'},{code:'es',flag:'🇪🇸',name:'Español'},{code:'fr',flag:'🇫🇷',name:'Français'},{code:'de',flag:'🇩🇪',name:'Deutsch'},{code:'it',flag:'🇮🇹',name:'Italiano'},{code:'pt',flag:'🇵🇹',name:'Português'},{code:'ar',flag:'🇸🇦',name:'العربية'}];
-let LANG_NAMES={tr:'Türkçe',en:'English',az:'Azərbaycanca',ru:'Русский',es:'Español',fr:'Français',de:'Deutsch',it:'Italiano',pt:'Português',ar:'Arapça'};
-let T={
-tr:{subtitle:"Herkes Çıkınca Şifre Boşalır!",viewClans:"Klanları Gör",createClan:"KLAN OLUŞTUR",findClan:"KLAN ARA",createClanTitle:"Klan Oluştur",createDesc:"İsim aynı olabilir, şifre farklı olsun!",createBtn:"KUR ✅",back:"Geri",findClanTitle:"Klan Ara",findDesc:"İsim aynı olabilir, şifreyi doğru yaz yeter!",searchBtn:"GİR 🔍",leave:"Çık",leave2:"Çık",admin:"Admin",allClans:"Tüm Klanlar",close:"Kapat",totalClans:"Toplam Klan",chooseLang:"Dil Seç",tip:"İsim aynı olabilir! Şifre farklı olsun!",dragTip:"Admin, Dil ve Yapay Zeka butonlarına 1 saniye basılı tut, taşı",dragging:"Taşıyorsun... Bırak!",pollTitle:"Anket Oluştur",pollCreate:"Anketi Oluştur",cancel:"İptal",adminHint:"1 sn basılı tut = Seç",hideFromMe:"Benden Gizle",showHidden:"Gizli Klanları Geri Göster",passwordLabel:"Şifre",writeMsg:"Mesaj yaz...",pollQ:"Sorun ne?",opt1:"Şık 1 - Evet",opt2:"Şık 2 - Hayır",created:"bu şifreyle yeni klan kurdu! 🎉 Şifre:",joined:"klana katıldı! 👋",people:"kişi",totalVotes:"Toplam",votes:"oy",alreadyVoted:"Zaten oy verdin!",writeNamePass:"Adını + Klan Adı + Şifreni yaz!",passTaken:"Bu Klan Adı + Şifre dolu! Başka dene!",noPass:"Böyle bir klan yok!",clanFull:"Klan doldu!",aiBtn:"Yapay Zeka",aiSub:"Her Soruya Cevap Verir • Bedava",newChat:"Yeni",aiTyping:"CLANS AI yazıyor...",aiWelcome:"Selam Amin! 👋 Ben CLANS AI! Bana HER ŞEYİ sor!"},
-en:{subtitle:"When Everyone Leaves, Password Frees!",viewClans:"View Clans",createClan:"CREATE CLAN",findClan:"FIND CLAN",createClanTitle:"Create Clan",createDesc:"Name can be same!",createBtn:"CREATE ✅",back:"Back",findClanTitle:"Find Clan",findDesc:"Just write password!",searchBtn:"JOIN 🔍",leave:"Leave",leave2:"Leave",admin:"Admin",allClans:"All Clans",close:"Close",totalClans:"Total Clans",chooseLang:"Choose Language",tip:"Name can be same!",dragTip:"Hold Admin, Language and AI buttons for 1 second, drag",dragging:"Dragging...",pollTitle:"Create Poll",pollCreate:"Create Poll",cancel:"Cancel",adminHint:"Hold 1 sec",hideFromMe:"Hide From Me",showHidden:"Show Hidden Clans",passwordLabel:"Password",writeMsg:"Write message...",pollQ:"Question?",opt1:"Option 1 - Yes",opt2:"Option 2 - No",created:"created a new clan! Password:",joined:"joined! 👋",people:"people",totalVotes:"Total",votes:"votes",alreadyVoted:"You already voted!",writeNamePass:"Write name + clan + password!",passTaken:"This Clan + Password taken!",noPass:"No such clan!",clanFull:"Clan is full!",aiBtn:"AI",aiSub:"Answers Everything • Free",newChat:"New",aiTyping:"CLANS AI is typing...",aiWelcome:"Hi Amin! 👋 I'm CLANS AI!"},
-es:{subtitle:"¡Cuando todos se van, la contraseña se libera!",viewClans:"Ver Clanes",createClan:"CREAR CLAN",findClan:"BUSCAR CLAN",createClanTitle:"Crear Clan",createDesc:"¡El nombre puede ser igual!",createBtn:"CREAR ✅",back:"Atrás",findClanTitle:"Buscar Clan",findDesc:"¡Solo escribe la contraseña!",searchBtn:"ENTRAR 🔍",leave:"Salir",leave2:"Salir",admin:"Admin",allClans:"Todos los Clanes",close:"Cerrar",totalClans:"Total",chooseLang:"Elegir Idioma",tip:"¡El nombre puede ser igual!",dragTip:"Mantén 1 segundo, arrastra",dragging:"¡Arrastrando!",pollTitle:"Crear Encuesta",pollCreate:"Crear Encuesta",cancel:"Cancelar",adminHint:"Mantén 1 seg",hideFromMe:"Ocultar de mí",showHidden:"Mostrar Ocultos",passwordLabel:"Contraseña",writeMsg:"Escribe...",pollQ:"¿Pregunta?",opt1:"Opción 1 - Sí",opt2:"Opción 2 - No",created:"¡creó un clan! Contraseña:",joined:"¡se unió! 👋",people:"personas",totalVotes:"Total",votes:"votos",alreadyVoted:"¡Ya votaste!",writeNamePass:"¡Escribe nombre + clan + contraseña!",passTaken:"¡Ocupado!",noPass:"¡No existe!",clanFull:"¡Lleno!",aiBtn:"IA",aiSub:"Responde Todo • Gratis",newChat:"Nuevo",aiTyping:"CLANS AI escribe...",aiWelcome:"¡Hola Amin! 👋 ¡Soy CLANS AI!"},
-fr:{subtitle:"Quand tout le monde part, le mot de passe se libère !",viewClans:"Voir les Clans",createClan:"CRÉER UN CLAN",findClan:"CHERCHER UN CLAN",createClanTitle:"Créer un Clan",createDesc:"Le nom peut être le même!",createBtn:"CRÉER ✅",back:"Retour",findClanTitle:"Chercher un Clan",findDesc:"Écris le mot de passe!",searchBtn:"ENTRER 🔍",leave:"Quitter",leave2:"Quitter",admin:"Admin",allClans:"Tous les Clans",close:"Fermer",totalClans:"Total",chooseLang:"Choisir la Langue",tip:"Le nom peut être le même!",dragTip:"Maintiens 1 sec, déplace",dragging:"Tu déplaces...",pollTitle:"Créer un Sondage",pollCreate:"Créer",cancel:"Annuler",adminHint:"Maintiens 1 sec",hideFromMe:"Masquer",showHidden:"Afficher Masqués",passwordLabel:"Mot de passe",writeMsg:"Écrire...",pollQ:"Question?",opt1:"Option 1 - Oui",opt2:"Option 2 - Non",created:"a créé un clan! Mot de passe:",joined:"a rejoint! 👋",people:"personnes",totalVotes:"Total",votes:"votes",alreadyVoted:"Tu as déjà voté!",writeNamePass:"Écris nom + clan + mot de passe!",passTaken:"Pris!",noPass:"Pas de tel clan!",clanFull:"Plein!",aiBtn:"IA",aiSub:"Répond à Tout • Gratuit",newChat:"Nouveau",aiTyping:"CLANS AI écrit...",aiWelcome:"Salut Amin! 👋 Je suis CLANS AI!"},
-az:{subtitle:"Hamı Çıxanda Şifrə Boşalır!",viewClans:"Klanlara Bax",createClan:"KLAN YARAT",findClan:"KLAN TAP",createClanTitle:"Klan Yarat",createDesc:"Ad eyni ola bilər!",createBtn:"YARAT ✅",back:"Geri",findClanTitle:"Klan Tap",findDesc:"Şifrəni düz yaz!",searchBtn:"GİR 🔍",leave:"Çıx",leave2:"Çıx",admin:"Admin",allClans:"Bütün Klanlar",close:"Bağla",totalClans:"Ümumi Klan",chooseLang:"Dil Seç",tip:"Ad eyni ola bilər!",dragTip:"1 saniyə bas, daşı",dragging:"Daşıyırsan...",pollTitle:"Anket Yarat",pollCreate:"Yarat",cancel:"Ləğv et",adminHint:"1 saniyə bas",hideFromMe:"Məndən Gizlə",showHidden:"Gizliləri Göstər",passwordLabel:"Şifrə",writeMsg:"Mesaj yaz...",pollQ:"Sual?",opt1:"Variant 1 - Bəli",opt2:"Variant 2 - Xeyr",created:"klan yaratdı! Şifrə:",joined:"qatıldı! 👋",people:"nəfər",totalVotes:"Ümumi",votes:"səs",alreadyVoted:"Artıq səs vermisən!",writeNamePass:"Ad + Klan + Şifrə yaz!",passTaken:"Dolu!",noPass:"Belə klan yoxdur!",clanFull:"Dolu!",aiBtn:"Süni İntellekt",aiSub:"Hər Şeyə Cavab Verir",newChat:"Yeni",aiTyping:"CLANS AI yazır...",aiWelcome:"Salam Amin! 👋 Mən CLANS AI-yəm!"},
-ru:{subtitle:"Когда все выйдут, пароль освободится!",viewClans:"Посмотреть Кланы",createClan:"СОЗДАТЬ КЛАН",findClan:"НАЙТИ КЛАН",createClanTitle:"Создать Клан",createDesc:"Имя может быть одинаковым!",createBtn:"СОЗДАТЬ ✅",back:"Назад",findClanTitle:"Найти Клан",findDesc:"Напиши пароль!",searchBtn:"ВОЙТИ 🔍",leave:"Выйти",leave2:"Выйти",admin:"Админ",allClans:"Все Кланы",close:"Закрыть",totalClans:"Всего",chooseLang:"Выбрать Язык",tip:"Имя может быть одинаковым!",dragTip:"Держи 1 сек, перетаскивай",dragging:"Перетаскиваешь...",pollTitle:"Создать Опрос",pollCreate:"Создать",cancel:"Отмена",adminHint:"Держи 1 сек",hideFromMe:"Скрыть",showHidden:"Показать скрытые",passwordLabel:"Пароль",writeMsg:"Написать...",pollQ:"Вопрос?",opt1:"Вариант 1 - Да",opt2:"Вариант 2 - Нет",created:"создал клан! Пароль:",joined:"вошёл! 👋",people:"человек",totalVotes:"Всего",votes:"голосов",alreadyVoted:"Ты уже голосовал!",writeNamePass:"Напиши имя + клан + пароль!",passTaken:"Занят!",noPass:"Нет такого клана!",clanFull:"Полон!",aiBtn:"ИИ",aiSub:"Отвечает на Всё",newChat:"Новый",aiTyping:"CLANS AI пишет...",aiWelcome:"Привет, Амин! 👋 Я CLANS AI!"}
-};
-['de','it','pt','ar','hi','ja','ko','zh'].forEach(c=>{ if(!T[c]) T[c]=T.en; });
-function t(k){ return (T[lang]&&T[lang][k])||T['tr'][k]||k; }
-function applyLang(){
-  document.querySelectorAll('[data-t]').forEach(el=>{ el.textContent=t(el.getAttribute('data-t')); });
-  document.getElementById('langBtn').textContent='🌐 '+lang.toUpperCase();
-  localStorage.setItem('clans_lang',lang);
-  renderLangList(); renderAIChat();
-  if(currentClanId) renderAll();
-}
-function openLang(){ document.getElementById('langPanel').classList.add('show'); renderLangList(); }
-function closeLang(){ document.getElementById('langPanel').classList.remove('show'); }
-function renderLangList(){ document.getElementById('langList').innerHTML = LANGS.map(l=>`<div class="langItem ${l.code===lang?'active':''}" onclick="setLang('${l.code}')"><span class="flag">${l.flag}</span> ${l.name} ${l.code===lang?'✓':''}</div>`).join(''); }
-function setLang(c){ lang=c; applyLang(); closeLang(); }
-function makeDraggable(btnId, storageKey){
-  let btn=document.getElementById(btnId);
-  let saved=JSON.parse(localStorage.getItem(storageKey)||'null');
-  if(saved){ btn.style.left=saved.left+'px'; btn.style.top=saved.top+'px'; btn.style.bottom='auto'; btn.style.right='auto'; }
-  let pressTimer=null, dragging=false, startX=0, startY=0, btnX=0, btnY=0;
-  function startPress(e){ let pt=e.touches?e.touches[0]:e; startX=pt.clientX; startY=pt.clientY; pressTimer=setTimeout(()=>{ dragging=true; btn.classList.add('dragging'); document.getElementById('dragHint').style.display='block'; if(navigator.vibrate) navigator.vibrate(100); let r=btn.getBoundingClientRect(); btnX=r.left; btnY=r.top; btn.style.left=btnX+'px'; btn.style.top=btnY+'px'; btn.style.bottom='auto'; btn.style.right='auto'; },1000); }
-  function moveDrag(e){ if(!dragging) return; e.preventDefault(); let pt=e.touches?e.touches[0]:e; let nx=pt.clientX-startX+btnX, ny=pt.clientY-startY+btnY; nx=Math.max(0,Math.min(window.innerWidth-btn.offsetWidth,nx)); ny=Math.max(0,Math.min(window.innerHeight-btn.offsetHeight,ny)); btn.style.left=nx+'px'; btn.style.top=ny+'px'; }
-  function endDrag(){ if(pressTimer) clearTimeout(pressTimer); if(dragging){ dragging=false; btn.classList.remove('dragging'); document.getElementById('dragHint').style.display='none'; localStorage.setItem(storageKey, JSON.stringify({left:parseInt(btn.style.left), top:parseInt(btn.style.top)})); return true; } return false; }
-  btn.addEventListener('touchstart', startPress, {passive:true}); btn.addEventListener('touchmove', moveDrag, {passive:false}); btn.addEventListener('touchend', endDrag); btn.addEventListener('mousedown', startPress); btn.addEventListener('mousemove', moveDrag); btn.addEventListener('mouseup', endDrag);
-}
-async function init(){ await refreshClans(); applyLang(); makeDraggable('adminBtn','pos_adminBtn'); makeDraggable('langBtn','pos_langBtn'); makeDraggable('aiBtn','pos_aiBtn_v2'); }
-init();
-function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function backToMenu(){ document.getElementById('createBox').classList.add('hidden'); document.getElementById('araBox').classList.add('hidden'); document.getElementById('menuBtns').classList.remove('hidden'); showHomeButtons(); }
-function showCreate(){ document.getElementById('menuBtns').classList.add('hidden'); document.getElementById('araBox').classList.add('hidden'); document.getElementById('createBox').classList.remove('hidden'); hideHomeButtons(); }
-function showAra(){ document.getElementById('menuBtns').classList.add('hidden'); document.getElementById('createBox').classList.add('hidden'); document.getElementById('araBox').classList.remove('hidden'); hideHomeButtons(); }
-function showHomeButtons(){ document.getElementById('adminBtn').style.display='block'; document.getElementById('langBtn').style.display='block'; document.getElementById('aiBtn').style.display='block'; if(isAdmin) document.getElementById('adminKlanlarBtn').style.display='block'; }
-function hideHomeButtons(){ document.getElementById('adminBtn').style.display='none'; document.getElementById('langBtn').style.display='none'; document.getElementById('aiBtn').style.display='none'; document.getElementById('adminKlanlarBtn').style.display='none'; }
-async function createClan(){
-  let clanName=document.getElementById('createClanName').value.trim();
-  let name=document.getElementById('createMyName').value.trim();
-  let pass=document.getElementById('createPass').value.trim();
-  if(!clanName||!name||!pass){ alert(t('writeNamePass')); return; }
-  await refreshClans();
-  // Blockpost gibi: Klan Adı + Şifre aynı olamaz!
-  let c=clans.find(x=>String(x.clanName||'').toLowerCase().trim()===clanName.toLowerCase() && String(x.pass).trim()===String(pass).trim());
-  if(c){ alert(t('passTaken')); return; }
-  myMemberId='u_'+Date.now()+'_'+Math.floor(Math.random()*1000000); myName=name;
-  c={id:Date.now(), clanName:clanName, pass:String(pass), members:[{id:myMemberId, name:name}], messages:[{user:'Sistem', uid:'sys', sys:'created', name:name, pass:String(pass), time:'Şimdi'}]};
-  clans.push(c); await saveCloud(); openChat(c.id);
-}
-async function araGir(){
-  let clanName=document.getElementById('araClanName').value.trim();
-  let name=document.getElementById('araMyName').value.trim();
-  let pass=document.getElementById('araPass').value.trim();
-  if(!clanName||!name||!pass){ alert(t('writeNamePass')); return; }
-  await refreshClans();
-  // Blockpost gibi: Klan Adı + Şifre ikisi de tutmalı!
-  let c=clans.find(x=>String(x.clanName||'').toLowerCase().trim()===clanName.toLowerCase() && String(x.pass).trim()===String(pass).trim());
-  if(!c){ alert(t('noPass')); return; }
-  myMemberId='u_'+Date.now()+'_'+Math.floor(Math.random()*1000000); myName=name;
-  c.members.push({id:myMemberId, name:name});
-  c.messages.push({user:'Sistem', uid:'sys', sys:'joined', name:name, time:'Şimdi'});
-  await saveCloud(); openChat(c.id);
-}
-function openChat(id){ currentClanId=id; let c=clans.find(x=>x.id===id); document.getElementById('home').style.display='none'; document.getElementById('chatScreen').style.display='flex'; hideHomeButtons(); document.getElementById('chatTitle').textContent=(c.clanName||'Klan')+' • 🔐 '+t('passwordLabel')+' : '+c.pass; renderAll(); }
-function sysText(m){ if(m.sys==='created') return escapeHtml(m.name)+' '+t('created')+' '+escapeHtml(m.pass); if(m.sys==='joined') return escapeHtml(m.name)+' '+t('joined'); return escapeHtml(m.text||''); }
-function renderAll(){
-  let c=clans.find(x=>x.id===currentClanId); if(!c) return;
-  document.getElementById('chatInfo').textContent=c.members.length+' / 100000 '+t('people');
-  document.getElementById('memberList').innerHTML=c.members.map(m=>`<span class="member">👤 ${escapeHtml(typeof m==='string'?m:m.name)}</span>`).join('');
-  document.getElementById('messages').innerHTML=c.messages.map(m=>{
-    let isMe=m.uid===myMemberId; let content=m.sys?sysText(m):escapeHtml(m.text||'');
-    if(m.poll){ let total=Object.keys(m.poll.votes||{}).length; let opts=m.poll.options.map((o,oi)=>{ let cnt=Object.values(m.poll.votes||{}).filter(v=>v===oi).length; let pct=total?Math.round(cnt/total*100):0; return `<div class="pollOpt" onclick="votePoll(${c.messages.indexOf(m)},${oi})"><div class="fill" style="width:${pct}%"></div><div class="txt"><span>${escapeHtml(o)}</span><span>${cnt} ${t('votes')} • %${pct}</span></div></div>`; }).join(''); content=`<div><b>📊 ${escapeHtml(m.poll.q)}</b>${opts}<div style="font-size:12px;opacity:.7;margin-top:6px">${t('totalVotes')} ${total} ${t('votes')}</div></div>`; }
-    return `<div class="msg ${isMe?'me':'other'}">${!isMe?`<b style="font-size:12px">${escapeHtml(m.user)}</b><br>`:''}${content}<small>${m.time}</small></div>`;
-  }).join('');
-  let b=document.getElementById('messages'); b.scrollTop=b.scrollHeight;
-}
-function backHome(){ document.getElementById('chatScreen').style.display='none'; document.getElementById('home').style.display='flex'; backToMenu(); }
-async function sendMsg(){ let inp=document.getElementById('msgInput'), txt=inp.value.trim(); if(!txt) return; let c=clans.find(x=>x.id===currentClanId); c.messages.push({user:myName, uid:myMemberId, text:txt, time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}); await saveCloud(); inp.value=''; renderAll(); setTimeout(async()=>{ await refreshClans(); renderAll(); }, 800); }
-async function leaveClan(){ await refreshClans(); let c=clans.find(x=>x.id===currentClanId); if(c && !isAdmin){ let before=c.members.length; c.members=c.members.filter(m=>(typeof m==='string'?false:m.id!==myMemberId)); if(c.members.length===before && c.members.length>0){ let idx=c.members.findIndex(m=>(typeof m==='string'?m===myName:m.name===myName)); if(idx!==-1) c.members.splice(idx,1); } if(c.members.length===0){ clans=clans.filter(x=>x.id!==currentClanId); await saveCloud(); backHome(); return; } await saveCloud(); } backHome(); }
-function togglePoll(){ let p=document.getElementById('pollPanel'); p.classList.toggle('show'); }
-async function createPoll(){ let q=document.getElementById('pollQ').value.trim(); let opts=[...document.querySelectorAll('.pollOptVal')].map(i=>i.value.trim()).filter(Boolean); if(!q){ alert(t('pollQ')); return; } if(opts.length<2){ alert('En az 2 şık!'); return; } let c=clans.find(x=>x.id===currentClanId); c.messages.push({user:myName, uid:myMemberId, text:'', poll:{q:q, options:opts, votes:{}}, time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}); await saveCloud(); document.getElementById('pollQ').value=''; document.querySelectorAll('.pollOptVal').forEach(i=>i.value=''); togglePoll(); renderAll(); }
-async function votePoll(msgIdx, optIdx){ let c=clans.find(x=>x.id===currentClanId); let m=c.messages[msgIdx]; if(!m||!m.poll) return; if(m.poll.votes[myMemberId]!==undefined){ alert(t('alreadyVoted')); return; } m.poll.votes[myMemberId]=optIdx; await saveCloud(); renderAll(); }
-function adminLogin(){ if(isAdmin){ openAdminPanel(); return; } let p=prompt('Admin Şifresi:'); if(p===null) return; if(p===ADMIN_PASS){ isAdmin=true; document.getElementById('adminBtn').textContent='👑 Admin (On)'; document.getElementById('adminBtn').classList.add('adminOn'); document.getElementById('adminKlanlarBtn').style.display='block'; alert('👑 Admin oldun!'); } else alert('Şifre yanlış!'); }
-async function openAdminPanel(){ if(!isAdmin){ adminLogin(); return; } await refreshClans(); cancelAdminSelection(); document.getElementById('adminPanel').style.display='flex'; renderAdminList(); }
-function renderAdminList(){
-  let visible=clans.filter(c=>!hiddenForAdmin.includes(c.id));
-  document.getElementById('totalClan').textContent=visible.length+' / '+clans.length;
-  document.getElementById('hiddenCount').textContent=hiddenForAdmin.length?`• 🙈 ${hiddenForAdmin.length}`:'';
-  document.getElementById('adminList').innerHTML=visible.map(c=>{ let names=c.members.map(m=>typeof m==='string'?m:m.name).join(', '); return `<div class="adminCard ${adminSelected.has(c.id)?'selected':''}" data-id="${c.id}" onclick="adminCardClick(${c.id})"><b>🏰 ${escapeHtml(c.clanName||'Klan')} • 🔐 ${t('passwordLabel')}: ${escapeHtml(c.pass)} ${adminSelected.has(c.id)?'✅':''}</b><p>👥 ${names} • 💬 ${c.messages.length} mesaj</p></div>`; }).join('')||'<p style="text-align:center;opacity:.6;padding:20px">Hiç klan yok 🙈</p>';
-  attachAdminLongPress(); updateAdminSelectBar();
-}
-function attachAdminLongPress(){ document.querySelectorAll('.adminCard').forEach(el=>{ let id=parseInt(el.dataset.id), timer=null; el.addEventListener('touchstart', ()=>{ timer=setTimeout(()=>{ enterAdminSelection(id); if(navigator.vibrate) navigator.vibrate(80); },1000); }, {passive:true}); el.addEventListener('touchmove', ()=>clearTimeout(timer)); el.addEventListener('touchend', ()=>clearTimeout(timer)); }); }
-function enterAdminSelection(id){ adminSelectionMode=true; toggleAdminSelect(id); }
-function adminCardClick(id){ if(adminSelectionMode){ toggleAdminSelect(id); return; } adminViewClan(id); }
-function toggleAdminSelect(id){ if(adminSelected.has(id)) adminSelected.delete(id); else adminSelected.add(id); if(adminSelected.size===0) adminSelectionMode=false; renderAdminList(); }
-function updateAdminSelectBar(){ let bar=document.getElementById('adminSelectBar'); if(adminSelectionMode && adminSelected.size>0){ bar.style.display='flex'; document.getElementById('adminSelectText').textContent=adminSelected.size+' seçildi ✅'; } else bar.style.display='none'; }
-function cancelAdminSelection(){ adminSelected.clear(); adminSelectionMode=false; updateAdminSelectBar(); if(document.getElementById('adminPanel').style.display==='flex') renderAdminList(); }
-function hideSelectedClans(){ if(adminSelected.size===0) return; adminSelected.forEach(id=>{ if(!hiddenForAdmin.includes(id)) hiddenForAdmin.push(id); }); localStorage.setItem('hidden_clans_admin_v3', JSON.stringify(hiddenForAdmin)); cancelAdminSelection(); }
-function showHiddenClans(){ hiddenForAdmin=[]; localStorage.setItem('hidden_clans_admin_v3', JSON.stringify(hiddenForAdmin)); cancelAdminSelection(); }
-function closeAdminPanel(){ document.getElementById('adminPanel').style.display='none'; cancelAdminSelection(); if(isAdmin) document.getElementById('adminKlanlarBtn').style.display='block'; }
-function adminViewClan(id){ closeAdminPanel(); let c=clans.find(x=>x.id===id); currentClanId=id; myName='👻 Admin'; myMemberId='admin_'+Date.now(); document.getElementById('home').style.display='none'; document.getElementById('chatScreen').style.display='flex'; hideHomeButtons(); document.getElementById('chatTitle').textContent=(c.clanName||'Klan')+' • '+t('passwordLabel')+': '+c.pass+' [GİZLİ 👻]'; renderAll(); }
-document.getElementById('adminBtn').addEventListener('click', ()=>{ if(!document.getElementById('adminBtn').classList.contains('dragging')) adminLogin(); });
-document.getElementById('langBtn').addEventListener('click', ()=>{ if(!document.getElementById('langBtn').classList.contains('dragging')) openLang(); });
-document.getElementById('aiBtn').addEventListener('click', ()=>{ if(!document.getElementById('aiBtn').classList.contains('dragging')) openAI(); });
-let aiHistory = JSON.parse(localStorage.getItem('clans_ai_hist')||'[]');
-function openAI(){ document.getElementById('aiScreen').style.display='flex'; renderAIChat(); }
-function closeAI(){ document.getElementById('aiScreen').style.display='none'; }
-function newAIChat(){ if(confirm('Sohbeti sileyim mi?')){ aiHistory=[]; localStorage.setItem('clans_ai_hist', JSON.stringify(aiHistory)); renderAIChat(); } }
-function renderAIChat(){
-  let box=document.getElementById('aiChat'); if(!box) return;
-  box.innerHTML='';
-  if(aiHistory.length===0){ box.innerHTML=`<div class="aiMsg ai"><b>🤖 CLANS AI</b><br>${t('aiWelcome')}</div>`; }
-  else { aiHistory.forEach(m=>{ let d=document.createElement('div'); d.className='aiMsg '+(m.role==='user'?'me':'ai'); d.textContent=m.text; box.appendChild(d); }); }
-  box.scrollTop=box.scrollHeight;
-}
-function askAIQuick(q){ document.getElementById('aiInp').value=q; sendAIMsg(); }
-function localKnowledge(q){
-  let s=q.toLowerCase();
-  if(s.includes('selam')||s.includes('merhaba')) return `Selam Amin! 👋 Naber?`;
-  if(s.includes('pilav')) return `🍚 PİLAV: 2 bardak pirinç yıka, tereyağı erit, kavur, 3 bardak su + tuz, kısık ateşte 12-15 dk AÇMA!`;
-  if(s.includes('ateş')) return `🔥 ATEŞ: Kuru dal + kağıt, çadır gibi diz, çakmakla yak, yavaş üfle. Büyüklerinle yak!`;
-  if(s.includes('televizyon')) return `📺 TV: Fişi tak, kumandadaki kırmızı düğmeye bas!`;
-  if(s.includes('buzdolabı')) return `🧊 BUZDOLABI: ÖNCE FİŞİ ÇEK! Sonra rafları çıkar. Tek başına yapma!`;
-  if(s.includes('fıkra')) return `😂 Temel: Ben patatesim! 🥔😂`;
-  if(s.includes('hikaye')) return `📖 Kaan ve Sihirli Klan: Kaan CLANS buldu!`;
-  return null;
-}
-async function sendAIMsg(){
-  let inp=document.getElementById('aiInp'); let txt=inp.value.trim(); if(!txt) return;
-  aiHistory.push({role:'user', text:txt}); localStorage.setItem('clans_ai_hist', JSON.stringify(aiHistory.slice(-40))); renderAIChat();
-  inp.value=''; document.getElementById('aiTyping').style.display='block';
-  let fast = localKnowledge(txt);
-  if(fast){ setTimeout(()=>{ document.getElementById('aiTyping').style.display='none'; aiHistory.push({role:'ai', text:fast}); localStorage.setItem('clans_ai_hist', JSON.stringify(aiHistory.slice(-40))); renderAIChat(); }, 800); return; }
-  try{
-    let prompt = `You are CLANS AI. Answer ONLY in ${LANG_NAMES[lang]||'Türkçe'}. User: ${txt}`;
-    let res = await fetch('https://text.pollinations.ai/' + encodeURIComponent(prompt) + '?model=openai');
-    let ans = await res.text();
-    if(ans && ans.length>10){ document.getElementById('aiTyping').style.display='none'; aiHistory.push({role:'ai', text:ans.slice(0,3000)}); localStorage.setItem('clans_ai_hist', JSON.stringify(aiHistory.slice(-40))); renderAIChat(); return; }
-  }catch(e){}
-  document.getElementById('aiTyping').style.display='none';
-  aiHistory.push({role:'ai', text:`Harika soru Amin! 😎 "${txt}" - Adım adım anlatayım: Önce malzemeleri hazırla, güvenli yerde çalış, acele etme!`});
-  localStorage.setItem('clans_ai_hist', JSON.stringify(aiHistory.slice(-40))); renderAIChat();
-}
-</script>
+  <div class="box">
+    <span class="dot"></span>
+    <h1>The site has<br>been closed</h1>
+    <p>CLANS</p>
+  </div>
 </body>
-                                              </html>
+</html>
